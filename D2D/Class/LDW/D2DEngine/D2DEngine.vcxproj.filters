@@ -39,6 +39,15 @@
     <ClInclude Include="ReferenceCounter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationAsset.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D2DEngine.cpp">
@@ -63,6 +72,15 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ReferenceCounter.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationAsset.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

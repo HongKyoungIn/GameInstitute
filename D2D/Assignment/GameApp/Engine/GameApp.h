@@ -34,5 +34,6 @@ private:
 	WCHAR szWindowClass[MAX_LOADSTRING]; // 기본 창 클래스 이름입니다.
 
 protected:
-	D2DRenderer* d2dRenderer;
+	D2DRenderer* mD2DRenderer;
+	ID2D1Bitmap* mBitmap;
 };

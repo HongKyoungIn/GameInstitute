@@ -8,6 +8,6 @@
 #define PCH_H
 
 // 여기에 미리 컴파일하려는 헤더 추가
-#include "framework.h"			// StaticLibrary는 프로젝트설정이 기본적으로 framework.h를 포함하여 pch를 사용함으로 설정되어있다.
+#include "framework.h"
 
 #endif //PCH_H

@@ -11,7 +11,7 @@ BOOL D2DRenderer::InitDirect2D(HWND hWnd) {
 	// NULL은 기본 COINIT 값을 사용하라는 뜻입니다.
 	// 함수 호출이 실패하면 hr에 실패 코드를 저장하고, FAILED 매크로를 통해 실패를 확인하여 FALSE를 반환합니다.이는 함수가 실패했음을 나타냅니다.
 	hr = CoInitialize(NULL);
-	if (FAILED(hr))
+	if(FAILED(hr))
 		return FALSE;
 
 
@@ -23,8 +23,8 @@ BOOL D2DRenderer::InitDirect2D(HWND hWnd) {
 	// D2D1_FACTORY_TYPE_SINGLE_THREADED는 팩토리가 단일 스레드에서 사용된다는 것을 의미합니다.
 	// & g_pD2DFactory는 생성된 팩토리의 포인터를 저장할 변수입니다.
 	// 팩토리 생성이 실패하면 FAILED 매크로를 통해 확인하고, FALSE를 반환합니다.
-	hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &g_pD2DFactory);
-	if (FAILED(hr))
+	hr = D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &mD2DFactory);
+	if(FAILED(hr))
 		return FALSE;
 
 
@@ -52,14 +52,14 @@ BOOL D2DRenderer::InitDirect2D(HWND hWnd) {
 	// D2D1::HwndRenderTargetProperties(g_hWnd, size)는 렌더 타겟이 바인딩될 윈도우 핸들(g_hWnd)과 크기(size)를 설정합니다.
 	// & g_pRenderTarget는 생성된 렌더 타겟의 포인터를 저장할 변수입니다.
 	// 함수 호출이 실패하면 FAILED 매크로를 통해 확인하고, FALSE를 반환합니다.
-	hr = g_pD2DFactory->CreateHwndRenderTarget(
+	hr = mD2DFactory->CreateHwndRenderTarget(
 		D2D1::RenderTargetProperties(),
 		D2D1::HwndRenderTargetProperties(hWnd, size),
-		&g_pRenderTarget);
+		&mRenderTarget);
 
 
 	// 렌더 타겟 생성이 실패했는지 확인하고, 실패하면 FALSE를 반환합니다.
-	if (FAILED(hr))
+	if(FAILED(hr))
 		return FALSE;
 
 
@@ -68,13 +68,13 @@ BOOL D2DRenderer::InitDirect2D(HWND hWnd) {
 
 	// **설명**
 	// 이 함수는 Direct2D를 성공적으로 초기화하고, 렌더 타겟을 생성하는 데 사용됩니다. 
-	// 초기화 과정에서 발생할 수 있는 실패를 처리하며, 성공적으로 초기화되면 `TRUE`를 반환합니다.
+	// 초기화 과정에서 발생할 수 있는 실패를 처리하며, 성공적으로 초기화되면 TRUE를 반환합니다.
 
 }
 
 void D2DRenderer::UninitDirect2D() {
-	if (g_pRenderTarget) g_pRenderTarget->Release();
-	if (g_pD2DFactory) g_pD2DFactory->Release();
+	if(mRenderTarget) mRenderTarget->Release();
+	if(mD2DFactory) mD2DFactory->Release();
 
 	// COM 사용 끝
 	CoUninitialize();

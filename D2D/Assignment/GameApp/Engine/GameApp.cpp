@@ -4,42 +4,37 @@
 #include "GameApp.h"
 #include "D2DRenderer.h"
 
-GameApp::GameApp()
-{
-	d2dRenderer = new D2DRenderer;
+GameApp::GameApp() {
+	mD2DRenderer = new D2DRenderer;
 }
 
-GameApp::~GameApp()
-{
+GameApp::~GameApp() {
 
 }
 
-bool GameApp::Initialize(_In_ HINSTANCE hInstance,_In_ int nCmdShow)
-{
+bool GameApp::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
 	// 전역 문자열을 초기화합니다.
 	LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
 	LoadStringW(hInstance, IDC_GAMEAPP, szWindowClass, MAX_LOADSTRING);
 	MyRegisterClass(hInstance);
-	if (!InitInstance(hInstance, nCmdShow)) {
+	if(!InitInstance(hInstance, nCmdShow)) {
 		return FALSE;
 	}
 
-	if (!d2dRenderer->InitDirect2D(g_hWnd))
+	if(!mD2DRenderer->InitDirect2D(g_hWnd))
 		return FALSE;
 
 	return true;
 }
 
-void GameApp::UnInitalize()
-{
-	d2dRenderer-> UninitDirect2D();
+void GameApp::UnInitalize() {
+	mD2DRenderer->UninitDirect2D();
 }
 
-void GameApp::Loop(MSG& msg)
-{
-	while (TRUE) {
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
-			if (msg.message == WM_QUIT)
+void GameApp::Loop(MSG& msg) {
+	while(TRUE) {
+		if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+			if(msg.message == WM_QUIT)
 				break;
 
 			//윈도우 메시지 처리 
@@ -48,21 +43,17 @@ void GameApp::Loop(MSG& msg)
 		}
 		else {
 			Update();
-			d2dRenderer->GetRendererTarget()->BeginDraw();
-			
-			Render();			
-			d2dRenderer->GetRendererTarget()->EndDraw();
+			mD2DRenderer->GetRenderTarget()->BeginDraw();
+
+			Render();
+			mD2DRenderer->GetRenderTarget()->EndDraw();
 		}
 	}
 }
 
-void GameApp::Update()
-{
-}
+void GameApp::Update() { }
 
-void GameApp::Render()
-{
-}
+void GameApp::Render() { }
 
 //  함수: MyRegisterClass()
 //
@@ -103,7 +94,7 @@ BOOL GameApp::InitInstance(HINSTANCE hInstance, int nCmdShow) {
 	g_hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
-	if (!g_hWnd) {
+	if(!g_hWnd) {
 		return FALSE;
 	}
 
@@ -124,12 +115,12 @@ BOOL GameApp::InitInstance(HINSTANCE hInstance, int nCmdShow) {
 //
 //
 LRESULT CALLBACK GameApp::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-	switch (message) {
+	switch(message) {
 
 	case WM_KEYDOWN:
-		if (wParam == VK_F11) {
+		if(wParam == VK_F11) {
 			// Toggle fullscreen mode
-			if (D2DRenderer::IsWindowFullscreen(hWnd))
+			if(D2DRenderer::IsWindowFullscreen(hWnd))
 				D2DRenderer::ExitFullscreen(hWnd);
 			else
 				D2DRenderer::EnterFullscreen(hWnd);
@@ -139,7 +130,7 @@ LRESULT CALLBACK GameApp::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 	{
 		int wmId = LOWORD(wParam);
 		// 메뉴 선택을 구문 분석합니다:
-		switch (wmId) {
+		switch(wmId) {
 		case IDM_EXIT:
 			DestroyWindow(hWnd);
 			break;

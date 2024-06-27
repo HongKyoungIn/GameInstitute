@@ -6,6 +6,6 @@
 class DemoApp : public GameApp {
 
 public:
-	void Update();
-	void Render();
+	void Update() override;  // 오버라이드 추가
+	void Render() override;  // 오버라이드 추가
 };

@@ -9,3 +9,10 @@
 #include <comdef.h>
 #include <d2d1helper.h>
 #include <string>
+#include <vector>
+#include <assert.h>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <map>
+#include <dxgi1_4.h>
