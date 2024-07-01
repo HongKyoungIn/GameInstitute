@@ -12,7 +12,7 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
     {
         mPlayer1 = new GameObject("Player1");
         Transform* transform1 = mPlayer1->GetTransform();
-        transform1->SetPosition(600.0f, 600.0f);
+        transform1->SetPosition(200.0f, 200.0f);
 
         SpriteRenderer* spriteRenderer1 = mPlayer1->AddComponent<SpriteRenderer>();
         spriteRenderer1->LoadBitmapFromFile(L"../Resource/Sun.png");

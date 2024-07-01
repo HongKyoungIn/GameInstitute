@@ -55,30 +55,10 @@ bool SpriteRenderer::LoadBitmapFromFile(const std::wstring& filePath) {
 void SpriteRenderer::Render(ID2D1HwndRenderTarget* renderTarget) {
     if(mBitmap) {
         Transform* transform = mOwner->GetTransform();
-        float x, y;
-        transform->GetPosition(x, y);
+        D2D1_MATRIX_3X2_F worldTransform = transform->GetWorldTransform();
 
-        D2D1_MATRIX_3X2_F translation = D2D1::Matrix3x2F::Translation(x, y);
-        D2D1_RECT_F destRect = mDestRect;
-        D2D1_POINT_2F corners[4] = {
-            {destRect.left, destRect.top},
-            {destRect.right, destRect.top},
-            {destRect.right, destRect.bottom},
-            {destRect.left, destRect.bottom}
-        };
-
-        for(int i = 0; i < 4; ++i) {
-            corners[i] = D2D1::Point2F(
-                corners[i].x * translation._11 + corners[i].y * translation._21 + translation._31,
-                corners[i].x * translation._12 + corners[i].y * translation._22 + translation._32
-            );
-        }
-
-        destRect = D2D1::RectF(
-            corners[0].x, corners[0].y,
-            corners[2].x, corners[2].y
-        );
-
-        renderTarget->DrawBitmap(mBitmap, destRect);
+        renderTarget->SetTransform(worldTransform);
+        renderTarget->DrawBitmap(mBitmap, mDestRect);
+        renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
     }
 }
