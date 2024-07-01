@@ -2,9 +2,11 @@
 //
 
 #include <iostream>
+#include "TestVectorAndClass.h"
+#include "TestVectorInt.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    TestVectorInt();
 }
 

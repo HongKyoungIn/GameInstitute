@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/unity,csharp,c++,visualstudio
 # Edit at https://www.toptal.com/developers/gitignore?templates=unity,csharp,c++,visualstudio
 
+유니티 게임수학
+
 ### C++ ###
 # Prerequisites
 *.d

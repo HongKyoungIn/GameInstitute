@@ -9,5 +9,12 @@
 #include <comdef.h>
 #include <d2d1helper.h>
 #include <string>
-
+#include <vector>
+#include <list>
+#include <assert.h>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <map>
+#include <dxgi1_4.h>
 // 프로젝트에서 공통적으로 사용할 헤더파일이므로 pch처럼 cpp 제일 앞부분에 추가한다.
