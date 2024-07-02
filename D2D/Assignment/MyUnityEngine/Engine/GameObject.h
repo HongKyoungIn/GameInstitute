@@ -13,6 +13,8 @@ public:
     void Update();
     void Render(ID2D1HwndRenderTarget* renderTarget);
 
+    void AddChild(GameObject* child);
+
     template <typename T, typename... TArgs>
     T* AddComponent(TArgs&&... args) {
         T* component = new T(this, std::forward<TArgs>(args)...);
@@ -22,7 +24,7 @@ public:
 
     template <typename T>
     T* GetComponent() {
-        for(auto component : mComponents) {
+        for(Component* component : mComponents) {
             T* comp = dynamic_cast<T*>(component);
             if(comp) {
                 return comp;
@@ -30,9 +32,6 @@ public:
         }
         return nullptr;
     }
-
-    void AddChild(GameObject* child);
-    void RemoveChild(GameObject* child);
 
     Transform* GetTransform() const { return mTransform; }
 

@@ -16,4 +16,6 @@ public:
 private:
     ID2D1Bitmap* mBitmap;
     D2D1_RECT_F mDestRect;
+    float mWidth = 0.0f;
+    float mHeight = 0.0f;
 };

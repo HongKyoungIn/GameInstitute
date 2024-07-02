@@ -47,6 +47,7 @@ BOOL Renderer::InitDirect2D(HWND hWnd) {
         NULL,
         CLSCTX_INPROC_SERVER,
         IID_PPV_ARGS(&mWICFactory));
+
     if(FAILED(hr))
         return FALSE;
 
@@ -58,12 +59,12 @@ void Renderer::UninitDirect2D() {
         mRenderTarget->Release();
         mRenderTarget = nullptr;
     }
-    if(mD2DFactory) {
-        mD2DFactory->Release();
-        mD2DFactory = nullptr;
-    }
     if(mWICFactory) {
         mWICFactory->Release();
+        mWICFactory = nullptr;
+    }
+    if(mD2DFactory) {
+        mD2DFactory->Release();
         mD2DFactory = nullptr;
     }
 

@@ -35,7 +35,7 @@ void Core::Uninitialize() {
         mRenderer = nullptr;
     }
 
-    for(auto gameObject : mGameObjects) {
+    for(GameObject* gameObject : mGameObjects) {
         delete gameObject;
     }
     mGameObjects.clear();
@@ -62,13 +62,13 @@ void Core::Loop(MSG& msg) {
 }
 
 void Core::Update() {
-    for(auto& gameObject : mGameObjects) {
+    for(GameObject* gameObject : mGameObjects) {
         gameObject->Update();
     }
 }
 
 void Core::Render() {
-    for(auto& gameObject : mGameObjects) {
+    for(GameObject* gameObject : mGameObjects) {
         gameObject->Render(mRenderer->GetRenderTarget());
     }
 }

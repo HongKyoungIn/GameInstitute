@@ -6,10 +6,10 @@ GameObject::GameObject(const std::string& name) : mName(name) {
 }
 
 GameObject::~GameObject() {
-    for(auto component : mComponents) {
+    for(Component* component : mComponents) {
         delete component;
     }
-    for(auto child : mChildren) {
+    for(GameObject* child : mChildren) {
         delete child;
     }
     delete mTransform;
@@ -17,32 +17,24 @@ GameObject::~GameObject() {
 
 void GameObject::Update() {
     mTransform->Update();
-    for(auto component : mComponents) {
+    for(Component* component : mComponents) {
         component->Update();
     }
-    for(auto child : mChildren) {
+    for(GameObject* child : mChildren) {
         child->Update();
     }
 }
 
 void GameObject::Render(ID2D1HwndRenderTarget* renderTarget) {
-    for(auto component : mComponents) {
+    for(Component* component : mComponents) {
         component->Render(renderTarget);
     }
-    for(auto child : mChildren) {
+    for(GameObject* child : mChildren) {
         child->Render(renderTarget);
     }
 }
 
 void GameObject::AddChild(GameObject* child) {
-    child->GetTransform()->SetParent(mTransform);
     mChildren.push_back(child);
-}
-
-void GameObject::RemoveChild(GameObject* child) {
-    auto it = std::find(mChildren.begin(), mChildren.end(), child);
-    if(it != mChildren.end()) {
-        mChildren.erase(it);
-        child->GetTransform()->SetParent(nullptr);
-    }
+    child->GetTransform()->SetParent(mTransform);
 }
