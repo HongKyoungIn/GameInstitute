@@ -5,11 +5,9 @@ ID2D1Factory* Renderer::mD2DFactory = nullptr;
 ID2D1HwndRenderTarget* Renderer::mRenderTarget = nullptr;
 IWICImagingFactory* Renderer::mWICFactory = nullptr;
 
-Renderer::Renderer()
-    : Component() { }
+Renderer::Renderer() { }
 
-Renderer::Renderer(GameObject* owner)
-    : Component(owner) { }
+Renderer::Renderer(GameObject* owner) { }
 
 Renderer::~Renderer() {
     UninitDirect2D();
@@ -94,9 +92,4 @@ void Renderer::ExitFullscreen(HWND hWnd) {
     SetWindowLong(hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_VISIBLE);
 
     SetWindowPos(hWnd, HWND_TOP, 0, 0, 800, 600, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
-}
-
-void Renderer::Render(ID2D1HwndRenderTarget* renderTarget) {
-    // 기본 렌더링 작업을 정의합니다. 이를 상속받는 클래스에서 오버라이드해야 합니다.
-    // 기본 구현은 빈 상태로 둡니다.
 }

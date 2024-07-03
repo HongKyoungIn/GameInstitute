@@ -6,7 +6,7 @@
 #pragma comment(lib,"windowscodecs.lib")
 
 
-class Renderer : public Component {
+class Renderer {
 public:
     Renderer();
     Renderer(GameObject* owner);
@@ -18,12 +18,9 @@ public:
     static void EnterFullscreen(HWND hWnd);
     static void ExitFullscreen(HWND hWnd);
 
-    ID2D1HwndRenderTarget* GetRenderTarget() const {
-        return mRenderTarget;
-    }
-
-    virtual void Update() override { }
-    virtual void Render(ID2D1HwndRenderTarget* renderTarget) override;
+    ID2D1HwndRenderTarget* GetRenderTarget() const { return mRenderTarget; }
+    ID2D1Factory* GetFactory() const { return mD2DFactory; }
+    IWICImagingFactory* GetWICFactory() const { return mWICFactory; }
 
 protected:
     static ID2D1Factory* mD2DFactory;

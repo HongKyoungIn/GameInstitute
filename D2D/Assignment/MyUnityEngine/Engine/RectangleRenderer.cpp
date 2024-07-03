@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 RectangleRenderer::RectangleRenderer(GameObject* owner)
-    : Renderer(owner), mBrush(nullptr), mColor(D2D1::ColorF(D2D1::ColorF::Green)) { // 초기 색상을 녹색으로 설정
+    : Component(owner), mBrush(nullptr), mColor(D2D1::ColorF(D2D1::ColorF::Green)) { // 초기 색상을 녹색으로 설정
     mRectangle = D2D1::RectF(0.0f, 0.0f, 100.0f, 100.0f);  // 기본 사각형 크기 설정
 }
 

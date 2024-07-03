@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Renderer.h"
+#include "Component.h"
 
-class RectangleRenderer : public Renderer {
+class RectangleRenderer : public Component {
 public:
     RectangleRenderer(GameObject* owner);
     virtual ~RectangleRenderer();
