@@ -7,6 +7,7 @@ class Game1 : public Core {
 public:
     virtual bool Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) override;
     void Update() override;
+    virtual void FixedUpdate() override;
     void Render() override;
     void HandleInput();
 

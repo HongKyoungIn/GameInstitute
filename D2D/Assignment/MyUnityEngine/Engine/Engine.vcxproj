@@ -133,21 +133,27 @@
     <ClInclude Include="Core.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Orbiting.h" />
     <ClInclude Include="RectangleRenderer.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Spinning.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="CommonInclude.h" />
+    <ClInclude Include="TimeManager.h" />
     <ClInclude Include="TransForm.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Orbiting.cpp" />
     <ClCompile Include="RectangleRenderer.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Spinning.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
+    <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="TransForm.cpp" />
   </ItemGroup>
   <ItemGroup>

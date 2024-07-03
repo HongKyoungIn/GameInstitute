@@ -3,6 +3,7 @@
 #include "CommonInclude.h"
 #include "GameObject.h"
 #include "Renderer.h"
+#include "TimeManager.h"
 
 #define MAX_LOADSTRING 100
 
@@ -17,6 +18,7 @@ public:
 	void Loop(MSG& msg);
 
 	virtual void Update();
+	virtual void FixedUpdate();
 	virtual void Render();
 
 	// 이 코드 모듈에 포함된 함수의 선언을 전달합니다:

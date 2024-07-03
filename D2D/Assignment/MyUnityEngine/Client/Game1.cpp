@@ -1,6 +1,7 @@
 #include "Game1.h"
 #include "../Engine/SpriteRenderer.h"
 #include "../Engine/Transform.h"
+#include "../Engine/Spinning.h"
 
 bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
     if(!Core::Initialize(hInstance, nCmdShow)) {
@@ -13,7 +14,10 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
         Transform* transform = mPlayer1->GetTransform();
         transform->SetPosition(300.0f, 300.0f);
         transform->SetRotation(180.0f);
+
         SpriteRenderer* spriteRenderer = mPlayer1->AddComponent<SpriteRenderer>();
+        Spinning* spinning = mPlayer1->AddComponent<Spinning>(45.0f);
+
         spriteRenderer->LoadBitmapFromFile(L"../Resource/Sun.png");
         spriteRenderer->SetSize(300.0f, 300.0f);
 
@@ -54,6 +58,10 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
 void Game1::Update() {
     Core::Update();
     HandleInput();  // 키 입력 처리 함수 호출
+}
+
+void Game1::FixedUpdate() { 
+    Core::FixedUpdate();
 }
 
 void Game1::Render() {

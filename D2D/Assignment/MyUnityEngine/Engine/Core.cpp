@@ -9,6 +9,7 @@ Renderer* Core::mRenderer = nullptr; // 정적 멤버 변수 초기화
 
 Core::Core() {
     mRenderer = new Renderer();
+    TimeManager::GetInstance()->Init();
 }
 
 Core::~Core() {
@@ -54,7 +55,11 @@ void Core::Loop(MSG& msg) {
             DispatchMessage(&msg);
         }
         else {
+            TimeManager::GetInstance()->Update();
             Update();
+            if(TimeManager::GetInstance()->ShouldFixedUpdate()) {
+                FixedUpdate();
+            }
             mRenderer->GetRenderTarget()->BeginDraw();
             mRenderer->GetRenderTarget()->Clear(D2D1::ColorF(D2D1::ColorF::Black));
             Render();
@@ -68,6 +73,10 @@ void Core::Update() {
     for(GameObject* gameObject : mGameObjects) {
         gameObject->Update();
     }
+}
+
+void Core::FixedUpdate() {
+    // FixedUpdate가 필요한 경우, 이곳에 추가적인 업데이트 로직을 작성합니다.
 }
 
 void Core::Render() {
