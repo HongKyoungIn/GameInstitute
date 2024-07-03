@@ -60,9 +60,6 @@
     <ClInclude Include="Spinning.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Orbiting.h">
-      <Filter>Component</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -90,9 +87,6 @@
       <Filter>Unity</Filter>
     </ClCompile>
     <ClCompile Include="Spinning.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Orbiting.cpp">
       <Filter>Component</Filter>
     </ClCompile>
   </ItemGroup>

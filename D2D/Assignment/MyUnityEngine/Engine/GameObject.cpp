@@ -32,6 +32,11 @@ void GameObject::AddChild(GameObject* child) {
     child->GetTransform()->SetParent(mTransform); // 자식의 Transform에 부모 설정
 }
 
+void GameObject::SetParent(GameObject* _parent) { 
+    _parent->AddChild(this);
+    mParent = _parent;
+}
+
 void GameObject::RemoveChild(GameObject* child) {
     for(size_t i = 0; i < mChildren.size(); ++i) {
         if(mChildren[i] == child) {

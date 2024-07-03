@@ -34,6 +34,7 @@ public:
     Transform* GetTransform() const { return mTransform; }
 
     void AddChild(GameObject* child);
+    void SetParent(GameObject* _parent);
     void RemoveChild(GameObject* child); // 자식 삭제를 위한 메서드 추가
     const std::vector<GameObject*>& GetChildren() const { return mChildren; }
 
@@ -41,5 +42,6 @@ private:
     std::string mName;
     std::vector<Component*> mComponents;
     std::vector<GameObject*> mChildren; // 자식 GameObject를 저장하는 벡터
+    GameObject* mParent;
     Transform* mTransform;
 };
