@@ -18,7 +18,7 @@
 4. Renderer
 - RenderFactory 생성
 - RenderTarget 생성
-- 이후 렌더링 기능을 수행하는 컴포넌트들은 Renderer을 상속하여 RenderTarget을 받아와 거기에 D2D 기능을 수행합니다.
+- d2d 관련한 초기화 기능 수행
 
 [Clinet]
 1. Scene1
