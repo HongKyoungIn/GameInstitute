@@ -42,5 +42,8 @@ private:
 
 // D2DRenderer
 protected:
-	Renderer* mRenderer;
+	static Renderer* mRenderer;
+
+public:
+	static Renderer* GetRenderer() { return mRenderer; }
 };

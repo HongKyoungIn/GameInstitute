@@ -11,6 +11,9 @@ public:
     void SetPosition(float x, float y);
     void GetPosition(float& x, float& y) const;
 
+    void SetRotation(float angle);
+    float GetRotation() const;
+
     void SetParent(Transform* parent);
     Transform* GetParent() const;
 
@@ -21,6 +24,7 @@ public:
 
 private:
     float mPosition[2];
+    float mRotation;
     Transform* mParent;
     D2D1_MATRIX_3X2_F mWorldTransform;
 };

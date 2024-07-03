@@ -1,6 +1,7 @@
 #include "SpriteRenderer.h"
 #include "GameObject.h"
 #include "Transform.h"
+#include "Core.h"
 
 SpriteRenderer::SpriteRenderer(GameObject* owner)
 	: Component(owner), mBitmap(nullptr), mDestRect(D2D1::RectF(0, 0, 100, 100)) { }
@@ -20,7 +21,10 @@ bool SpriteRenderer::LoadBitmapFromFile(const std::wstring& filePath) {
 	IWICBitmapDecoder* pDecoder = NULL;
 	IWICFormatConverter* pConverter = NULL;
 
-	hr = mRenderer->GetWICFactory()->CreateDecoderFromFilename(
+	Renderer* renderer = Core::GetRenderer();
+	IWICImagingFactory* wicFactory = renderer->GetWICFactory();
+
+	hr = wicFactory->CreateDecoderFromFilename(
 		filePath.c_str(),                  // Image to be decoded
 		NULL,                              // Do not prefer a particular vendor
 		GENERIC_READ,                      // Desired read access to the file
@@ -31,12 +35,11 @@ bool SpriteRenderer::LoadBitmapFromFile(const std::wstring& filePath) {
 	IWICBitmapFrameDecode* pFrame = NULL;
 
 	if(SUCCEEDED(hr)) {
-
 		hr = pDecoder->GetFrame(0, &pFrame);
 	}
 
 	if(SUCCEEDED(hr)) {
-		hr = mRenderer->GetWICFactory()->CreateFormatConverter(&pConverter);
+		hr = wicFactory->CreateFormatConverter(&pConverter);
 	}
 
 	if(SUCCEEDED(hr)) {
@@ -48,7 +51,8 @@ bool SpriteRenderer::LoadBitmapFromFile(const std::wstring& filePath) {
 	}
 
 	if(SUCCEEDED(hr)) {
-		hr = mRenderer->GetRenderTarget()->CreateBitmapFromWicBitmap(pConverter, NULL, &mBitmap);
+		ID2D1HwndRenderTarget* renderTarget = renderer->GetRenderTarget();
+		hr = renderTarget->CreateBitmapFromWicBitmap(pConverter, NULL, &mBitmap);
 	}
 
 	if(pFrame) 

@@ -16,7 +16,6 @@ public:
     virtual void Render(ID2D1HwndRenderTarget* renderTarget) override;
 
 private:
-    Renderer* mRenderer;
     ID2D1Bitmap* mBitmap;
     D2D1_RECT_F mDestRect;
     float mWidth = 0.0f;

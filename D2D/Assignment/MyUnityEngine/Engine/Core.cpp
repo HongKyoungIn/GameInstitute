@@ -5,8 +5,10 @@
 #include "Renderer.h"
 #include "GameObject.h"
 
-Core::Core() : mRenderer(nullptr) { 
-    mRenderer = new Renderer(); // Renderer 객체 생성
+Renderer* Core::mRenderer = nullptr; // 정적 멤버 변수 초기화
+
+Core::Core() { 
+    mRenderer = new Renderer();
 }
 
 Core::~Core() {
