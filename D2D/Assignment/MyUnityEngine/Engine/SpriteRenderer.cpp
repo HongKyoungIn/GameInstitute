@@ -51,9 +51,9 @@ bool SpriteRenderer::LoadBitmapFromFile(const std::wstring& filePath) {
 	}
 
 	if(SUCCEEDED(hr)) {
-		ID2D1HwndRenderTarget* renderTarget = renderer->GetRenderTarget();
-		hr = renderTarget->CreateBitmapFromWicBitmap(pConverter, NULL, &mBitmap);
-	}
+        ID2D1HwndRenderTarget* renderTarget = renderer->GetRenderTarget();
+        hr = renderTarget->CreateBitmapFromWicBitmap(pConverter, NULL, &mBitmap);
+    }
 
 	if(pFrame) 
 		pFrame->Release();

@@ -7,7 +7,7 @@
 
 Renderer* Core::mRenderer = nullptr; // 정적 멤버 변수 초기화
 
-Core::Core() { 
+Core::Core() {
     mRenderer = new Renderer();
 }
 
@@ -31,16 +31,16 @@ bool Core::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
 }
 
 void Core::Uninitialize() {
+    for(GameObject* gameObject : mGameObjects) {
+        delete gameObject;
+    }
+    mGameObjects.clear();
+
     if(mRenderer) {
         mRenderer->UninitDirect2D();
         delete mRenderer;
         mRenderer = nullptr;
     }
-
-    for(GameObject* gameObject : mGameObjects) {
-        delete gameObject;
-    }
-    mGameObjects.clear();
 }
 
 void Core::Loop(MSG& msg) {
@@ -56,8 +56,9 @@ void Core::Loop(MSG& msg) {
         else {
             Update();
             mRenderer->GetRenderTarget()->BeginDraw();
-
+            mRenderer->GetRenderTarget()->Clear(D2D1::ColorF(D2D1::ColorF::Black));
             Render();
+
             mRenderer->GetRenderTarget()->EndDraw();
         }
     }
@@ -179,3 +180,23 @@ LRESULT CALLBACK Core::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 void Core::AddGameObject(GameObject* gameObject) {
     mGameObjects.push_back(gameObject);
 }
+
+void Core::RemoveGameObject(GameObject* gameObject) {
+    if(!gameObject) return;
+
+    // 자식 오브젝트가 있다면 먼저 삭제
+    const std::vector<GameObject*>& children = gameObject->GetChildren();
+    for(size_t i = 0; i < children.size(); ++i) {
+        RemoveGameObject(children[i]);  // 재귀적으로 자식 오브젝트 삭제
+    }
+
+    // 벡터에서 게임 오브젝트를 삭제
+    for(size_t i = 0; i < mGameObjects.size(); ++i) {
+        if(mGameObjects[i] == gameObject) {
+            mGameObjects.erase(mGameObjects.begin() + i);
+            delete gameObject;  // 게임 오브젝트 메모리 해제
+            return;
+        }
+    }
+}
+

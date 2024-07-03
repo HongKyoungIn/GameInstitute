@@ -36,6 +36,7 @@ private:
 // Unity Engine
 public:
 	void AddGameObject(GameObject* gameObject);
+	void RemoveGameObject(GameObject* _gameObject);
 
 private:
 	std::vector<GameObject*> mGameObjects;

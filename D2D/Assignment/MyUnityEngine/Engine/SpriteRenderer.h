@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Component.h"
-#include "Renderer.h"
 #include <string>
 
 class SpriteRenderer : public Component {

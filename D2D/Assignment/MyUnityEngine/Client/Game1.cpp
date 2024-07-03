@@ -45,14 +45,26 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
 
         AddGameObject(mPlayer3);
     }
+    // 자식 오브젝트 제거 테스트
+    // RemoveGameObject(mPlayer1);
 
     return true;
 }
 
 void Game1::Update() {
     Core::Update();
+    HandleInput();  // 키 입력 처리 함수 호출
 }
 
 void Game1::Render() {
     Core::Render();
+}
+
+void Game1::HandleInput() {
+    if(GetAsyncKeyState(VK_SPACE) & 0x8000) {
+         if(mPlayer1) {
+            RemoveGameObject(mPlayer1);
+            mPlayer1 = nullptr;  // 오브젝트를 제거한 후 포인터를 nullptr로 설정
+        }
+    }
 }
