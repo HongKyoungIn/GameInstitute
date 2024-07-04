@@ -2,6 +2,7 @@
 #include "../Engine/SpriteRenderer.h"
 #include "../Engine/Transform.h"
 #include "../Engine/Spinning.h"
+#include "../Engine/ResourceManager.h"
 
 bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
     if(!Core::Initialize(hInstance, nCmdShow)) {
@@ -13,11 +14,9 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
         mPlayer1 = new GameObject("Player1");
         Transform* transform = mPlayer1->GetTransform();
         transform->SetPosition(1920.0f / 2, 1080.0f / 2);
-        transform->SetRotation(180.0f);
 
         SpriteRenderer* spriteRenderer = mPlayer1->AddComponent<SpriteRenderer>();
         Spinning* spinning = mPlayer1->AddComponent<Spinning>(45.0f);
-
         spriteRenderer->LoadBitmapFromFile(L"../Resource/Sun.png");
         spriteRenderer->SetSize(300.0f, 300.0f);
 
@@ -28,9 +27,9 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
         mPlayer2 = new GameObject("Player2");
         Transform* transform = mPlayer2->GetTransform();
         transform->SetPosition(500.0f, 0.0f);
-        Spinning* spinning = mPlayer2->AddComponent<Spinning>(90.0f);
 
         SpriteRenderer* spriteRenderer = mPlayer2->AddComponent<SpriteRenderer>();
+        Spinning* spinning = mPlayer2->AddComponent<Spinning>(90.0f);
         spriteRenderer->LoadBitmapFromFile(L"../Resource/Earth.png");
         spriteRenderer->SetSize(200.0f, 200.0f);
 

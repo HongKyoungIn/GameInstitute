@@ -19,6 +19,9 @@
     <Filter Include="Component">
       <UniqueIdentifier>{8511af40-b237-4d78-a92b-2b2d5a97abd6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{05fb8dde-2d21-46c9-a97b-42b65267cf93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -54,11 +57,14 @@
     <ClInclude Include="RectangleRenderer.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="TimeManager.h">
-      <Filter>Unity</Filter>
-    </ClInclude>
     <ClInclude Include="Spinning.h">
       <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -83,11 +89,14 @@
     <ClCompile Include="RectangleRenderer.cpp">
       <Filter>Component</Filter>
     </ClCompile>
-    <ClCompile Include="TimeManager.cpp">
-      <Filter>Unity</Filter>
-    </ClCompile>
     <ClCompile Include="Spinning.cpp">
       <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

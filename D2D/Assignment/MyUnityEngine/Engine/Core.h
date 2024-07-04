@@ -49,4 +49,10 @@ protected:
 
 public:
 	static Renderer* GetRenderer() { return mRenderer; }
+
+
+// 디버깅을 위한 콘솔창 출력
+private:
+	void InitializeConsole(); // 콘솔 초기화 함수 추가
+
 };

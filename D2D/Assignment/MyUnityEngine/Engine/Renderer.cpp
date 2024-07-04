@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include <comdef.h>
+#include "ResourceManager.h"
 
 ID2D1Factory* Renderer::mD2DFactory = nullptr;
 ID2D1HwndRenderTarget* Renderer::mRenderTarget = nullptr;
@@ -10,6 +11,7 @@ Renderer::Renderer() { }
 Renderer::Renderer(GameObject* owner) { }
 
 Renderer::~Renderer() {
+    std::cout << "Renderer destructor called" << std::endl;
     UninitDirect2D();
 }
 
@@ -53,6 +55,8 @@ BOOL Renderer::InitDirect2D(HWND hWnd) {
 }
 
 void Renderer::UninitDirect2D() {
+    std::cout << "Uninitializing Direct2D" << std::endl;
+
     if(mRenderTarget) {
         mRenderTarget->Release();
         mRenderTarget = nullptr;

@@ -8,10 +8,11 @@ public:
     SpriteRenderer(GameObject* owner);
     virtual ~SpriteRenderer();
 
-    bool LoadBitmapFromFile(const std::wstring& filePath);
+    void SetBitMap(ID2D1Bitmap* _file);
     void SetSize(float width, float height);
 
     virtual void Update() override;
+    bool LoadBitmapFromFile(const std::wstring& filePath);
     virtual void Render(ID2D1HwndRenderTarget* renderTarget) override;
 
 private:

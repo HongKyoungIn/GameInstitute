@@ -8,6 +8,7 @@
 Renderer* Core::mRenderer = nullptr; // 정적 멤버 변수 초기화
 
 Core::Core() {
+    InitializeConsole(); // 콘솔 창 초기화
     mRenderer = new Renderer();
     TimeManager::GetInstance()->Init();
 }
@@ -209,3 +210,11 @@ void Core::RemoveGameObject(GameObject* gameObject) {
     }
 }
 
+void Core::InitializeConsole() {
+    AllocConsole();
+    FILE* file;
+    freopen_s(&file, "CONOUT$", "w", stdout);
+    freopen_s(&file, "CONOUT$", "w", stderr);
+    freopen_s(&file, "CONIN$", "r", stdin);
+    std::cout << "Console window created" << std::endl;
+}
