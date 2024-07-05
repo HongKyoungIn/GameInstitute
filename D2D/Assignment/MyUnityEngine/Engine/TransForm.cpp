@@ -2,21 +2,16 @@
 
 Transform::Transform(GameObject* owner)
     : Component(owner), mRotation(0.0f), mParent(nullptr) {
-    mPosition[0] = 0.0f;
-    mPosition[1] = 0.0f;
+    mPosition.x = 0.0f;
+    mPosition.y = 0.0f;
     mWorldTransform = D2D1::Matrix3x2F::Identity();
 }
 
 Transform::~Transform() { }
 
-void Transform::SetPosition(float x, float y) {
-    mPosition[0] = x;
-    mPosition[1] = y;
-}
-
-void Transform::GetPosition(float& x, float& y) const {
-    x = mPosition[0];
-    y = mPosition[1];
+void Transform::SetPosition(float _x, float _y) {
+    mPosition.x = _x;
+    mPosition.y = _y;
 }
 
 void Transform::SetRotation(float angle) {
@@ -36,7 +31,7 @@ Transform* Transform::GetParent() const {
 }
 
 void Transform::Update() {
-    D2D1_MATRIX_3X2_F translation = D2D1::Matrix3x2F::Translation(mPosition[0], mPosition[1]);
+    D2D1_MATRIX_3X2_F translation = D2D1::Matrix3x2F::Translation(mPosition.x, mPosition.y);
     D2D1_MATRIX_3X2_F rotation = D2D1::Matrix3x2F::Rotation(mRotation);
 
     D2D1_MATRIX_3X2_F localTransform = rotation * translation;

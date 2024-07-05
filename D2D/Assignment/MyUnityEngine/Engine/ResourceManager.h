@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <string>
 #include "Renderer.h"
+#include "AnimationAsset.h"
 
 class ResourceManager {
 public:
@@ -19,6 +20,9 @@ public:
 
     void ReleaseAllResources();
 
+    AnimationAsset* LoadAnimation(const std::wstring& filePath, int frameCount, float frameDuration);
+    void ReleaseAnimation(const std::wstring& filePath);
+
 private:
     ResourceManager();
     ~ResourceManager();
@@ -26,4 +30,5 @@ private:
     void SafeRelease(IUnknown* resource);
 
     std::unordered_map<std::wstring, ID2D1Bitmap*> mBitmapMap;
+    std::unordered_map<std::wstring, AnimationAsset*> mAnimations;
 };

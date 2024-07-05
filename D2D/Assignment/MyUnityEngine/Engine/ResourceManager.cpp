@@ -23,7 +23,7 @@ bool ResourceManager::CreateD2DBitmapFromFile(const std::wstring& filePath) {
     IWICBitmapDecoder* pDecoder = nullptr;
     IWICFormatConverter* pConverter = nullptr;
     IWICBitmapFrameDecode* pFrame = nullptr;
-    ID2D1Bitmap*pBitmap = nullptr;
+    ID2D1Bitmap* pBitmap = nullptr;
 
     Renderer* renderer = Core::GetRenderer();
     IWICImagingFactory* wicFactory = renderer->GetWICFactory();
@@ -89,4 +89,33 @@ void ResourceManager::ReleaseAllResources() {
     std::cout << "Releasing all resources" << std::endl;
 
     mBitmapMap.clear();
+}
+
+AnimationAsset* ResourceManager::LoadAnimation(const std::wstring& filePath, int frameCount, float frameDuration) {
+    auto it = mAnimations.find(filePath);
+    if(it != mAnimations.end()) {
+        it->second->AddRef();
+        return it->second;
+    }
+
+    AnimationAsset* animation = new AnimationAsset();
+    if(animation->Load(filePath, frameCount, frameDuration)) {
+        mAnimations[filePath] = animation;
+        animation->AddRef();
+        return animation;
+    }
+    else {
+        delete animation;
+        return nullptr;
+    }
+}
+
+void ResourceManager::ReleaseAnimation(const std::wstring& filePath) {
+    auto it = mAnimations.find(filePath);
+    if(it != mAnimations.end()) {
+        it->second->Release();
+        if(it->second->GetRefCount() == 0) {
+            mAnimations.erase(it);
+        }
+    }
 }

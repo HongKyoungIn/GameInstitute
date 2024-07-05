@@ -129,11 +129,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationAsset.h" />
+    <ClInclude Include="Animator.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="RectangleRenderer.h" />
+    <ClInclude Include="ReferenceCounter.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -145,10 +148,13 @@
     <ClInclude Include="TransForm.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationAsset.cpp" />
+    <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="RectangleRenderer.cpp" />
+    <ClCompile Include="ReferenceCounter.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Spinning.cpp" />

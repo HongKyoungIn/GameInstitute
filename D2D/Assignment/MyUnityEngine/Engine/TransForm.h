@@ -8,8 +8,8 @@ public:
     Transform(GameObject* owner);
     virtual ~Transform();
 
-    void SetPosition(float x, float y);
-    void GetPosition(float& x, float& y) const;
+    void SetPosition(float _x, float _y);
+    D2D1_POINT_2F GetPosition() const { return mPosition; }
 
     void SetRotation(float angle);
     float GetRotation() const;
@@ -23,7 +23,7 @@ public:
     D2D1_MATRIX_3X2_F GetWorldTransform() const { return mWorldTransform; }
 
 private:
-    float mPosition[2];
+    D2D1_POINT_2F mPosition;
     float mRotation;
     Transform* mParent;
     D2D1_MATRIX_3X2_F mWorldTransform;
