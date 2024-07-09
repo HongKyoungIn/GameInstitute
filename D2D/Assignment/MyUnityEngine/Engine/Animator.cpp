@@ -3,7 +3,8 @@
 #include "ResourceManager.h"
 #include "TimeManager.h"
 
-Animator::Animator(GameObject* owner) : Component(owner), currentAnimation(nullptr), currentTime(0.0f), currentFrameIndex(0) { }
+Animator::Animator(GameObject* owner) :
+    Component(owner), currentAnimation(nullptr), currentTime(0.0f), currentFrameIndex(0) { }
 
 Animator::~Animator() {
     if(currentAnimation) {
@@ -11,14 +12,16 @@ Animator::~Animator() {
     }
 }
 
-void Animator::SetAnimation(const std::wstring& filePath, int frameCount, float frameDuration) {
+void Animator::SetAnimation(const std::wstring& filePath, int frameCountX, int frameCountY, float frameDuration) {
     if(currentAnimation) {
         ResourceManager::GetInstance()->ReleaseAnimation(currentAnimationFilePath);
     }
-    currentAnimation = ResourceManager::GetInstance()->LoadAnimation(filePath, frameCount, frameDuration);
-    currentAnimationFilePath = filePath;
-    currentTime = 0.0f;
-    currentFrameIndex = 0;
+
+    currentAnimation = ResourceManager::GetInstance()->LoadAnimationImage(filePath, frameCountX, frameCountY, frameDuration);
+    if(currentAnimation) {
+        currentFrameIndex = 0;
+        currentTime = 0.0f;
+    }
 }
 
 void Animator::Update() {
@@ -37,21 +40,19 @@ void Animator::Render(ID2D1HwndRenderTarget* renderTarget) {
     if(!currentAnimation) return;
 
     const FrameInfo& frame = currentAnimation->GetFrames()[currentFrameIndex];
-    Transform* transform = mOwner->GetTransform();  // 오브젝트의 변환 정보를 가져옴
+    Transform* transform = mOwner->GetTransform();
 
-    D2D1_POINT_2F position = transform->GetPosition();  // 오브젝트의 위치를 가져옴
-    D2D1_RECT_F destinationRect = D2D1::RectF(
-        position.x,
-        position.y,
-        position.x + (frame.sourceRect.right - frame.sourceRect.left),
-        position.y + (frame.sourceRect.bottom - frame.sourceRect.top)
-    );
+    D2D1_MATRIX_3X2_F translation = D2D1::Matrix3x2F::Translation(transform->GetPosition().x - frame.center.x, transform->GetPosition().y - frame.center.y);
+    D2D1_MATRIX_3X2_F rotation = D2D1::Matrix3x2F::Rotation(transform->GetRotation(), transform->GetPosition());
+    D2D1_MATRIX_3X2_F scale;
 
-    renderTarget->DrawBitmap(
-        currentAnimation->GetBitmap(),
-        destinationRect,
-        1.0f,
-        D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
-        frame.sourceRect
-    );
+    if(mFlip) {
+        scale = D2D1::Matrix3x2F::Scale(-transform->GetScale().x, transform->GetScale().y, transform->GetPosition());
+    }
+    else {
+        scale = D2D1::Matrix3x2F::Scale(transform->GetScale().x, transform->GetScale().y, transform->GetPosition());
+    }
+
+    renderTarget->SetTransform(scale * rotation * translation);
+    renderTarget->DrawBitmap(currentAnimation->GetBitmap(), D2D1::RectF(0.0f, 0.0f, frame.sourceRect.right - frame.sourceRect.left, frame.sourceRect.bottom - frame.sourceRect.top), 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, frame.sourceRect);
 }

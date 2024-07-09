@@ -20,7 +20,7 @@ public:
 
     void ReleaseAllResources();
 
-    AnimationAsset* LoadAnimation(const std::wstring& filePath, int frameCount, float frameDuration);
+    AnimationAsset* LoadAnimationImage(const std::wstring& filePath, int frameCountX, int frameCountY, float frameDuration);
     void ReleaseAnimation(const std::wstring& filePath);
 
 private:

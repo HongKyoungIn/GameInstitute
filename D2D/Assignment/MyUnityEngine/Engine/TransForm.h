@@ -11,6 +11,9 @@ public:
     void SetPosition(float _x, float _y);
     D2D1_POINT_2F GetPosition() const { return mPosition; }
 
+    void SetScale(float x, float y);
+    D2D1_POINT_2F GetScale() const { return mScale; }
+
     void SetRotation(float angle);
     float GetRotation() const;
 
@@ -24,6 +27,7 @@ public:
 
 private:
     D2D1_POINT_2F mPosition;
+    D2D1_POINT_2F mScale = { 1.0f, 1.0f };
     float mRotation;
     Transform* mParent;
     D2D1_MATRIX_3X2_F mWorldTransform;

@@ -12,7 +12,7 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
 
     // 부모 오브젝트 생성
     {
-        mPlayer1 = new GameObject("Player1");
+        mPlayer1 = new GameObject("Sun");
         Transform* transform = mPlayer1->GetTransform();
         transform->SetPosition(1920.0f / 2, 1080.0f / 2);
 
@@ -25,7 +25,7 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
     }
 
     {
-        mPlayer2 = new GameObject("Player2");
+        mPlayer2 = new GameObject("Earth");
         Transform* transform = mPlayer2->GetTransform();
         transform->SetPosition(500.0f, 0.0f);
 
@@ -41,7 +41,7 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
 
     // 자식 오브젝트 생성
     {
-        GameObject* mPlayer3 = new GameObject("Player3");
+        GameObject* mPlayer3 = new GameObject("Moon");
         Transform* transform = mPlayer3->GetTransform();
         transform->SetPosition(150, 0);  // 부모 오브젝트로부터 상대적인 위치
         Spinning* spinning = mPlayer3->AddComponent<Spinning>(180.0f);
@@ -56,12 +56,23 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
     }
 
     {
-        GameObject* player = new GameObject("Player");
+        GameObject* player4 = new GameObject("Player");
+        Transform* transform = player4->GetTransform();
+        transform->SetPosition(300.0f, 300.0f);
+
+        Animator* animator = player4->AddComponent<Animator>();
+        animator->SetAnimation(L"../Resource/Run.png", 8, 1, 0.1f);  // 8 frames, 0.1 seconds per frame
+        animator->SetFlip(true);
+        AddGameObject(player4);
+    }
+
+    {
+        GameObject* player = new GameObject("BackGround");
         Transform* transform = player->GetTransform();
         transform->SetPosition(0, 0);
 
         Animator* animator = player->AddComponent<Animator>();
-        animator->SetAnimation(L"../Resource/midnight.png", 4, 0.1f);  // 8 frames, 0.1 seconds per frame
+        animator->SetAnimation(L"../Resource/midnight.png", 4, 2, 0.1f);  // 8 frames, 0.1 seconds per frame
         AddGameObject(player);
     }
     
@@ -84,11 +95,34 @@ void Game1::Render() {
     Core::Render();
 }
 
+void Game1::CreateCharacter(D2D1_POINT_2F position, const std::wstring& filePath, int frameCountX, int frameCountY, float frameDuration) {
+    GameObject* character = new GameObject("Character");
+    Transform* transform = character->GetTransform();
+    transform->SetPosition(position.x, position.y);
+
+    Animator* animator = character->AddComponent<Animator>();
+    animator->SetAnimation(filePath, frameCountX, frameCountY, frameDuration);
+
+    AddGameObject(character);
+}
+
 void Game1::HandleInput() {
-    if(GetAsyncKeyState(VK_SPACE) & 0x8000) {
-         if(mPlayer1) {
-            RemoveGameObject(mPlayer1);
-            mPlayer1 = nullptr;  // 오브젝트를 제거한 후 포인터를 nullptr로 설정
+    if((GetAsyncKeyState(VK_SPACE) & 0x8000) && !mSpacePressed) {
+        mSpacePressed = true;
+        D2D1_POINT_2F position = D2D1::Point2F((float)(rand() % 1920), (float)(rand() % 1080));
+        CreateCharacter(position, L"../Resource/Run.png", 8, 1, 0.1f);
+    }
+    else if(!(GetAsyncKeyState(VK_SPACE) & 0x8000)) {
+        mSpacePressed = false;
+    }
+
+    if(GetAsyncKeyState(VK_DELETE) & 0x8000 && !mDelPressed) {
+        mDelPressed = true;
+        if(!mGameObjects.empty()) {
+            RemoveGameObject(mGameObjects.back());
         }
+    }
+    else if(!(GetAsyncKeyState(VK_DELETE) & 0x8000)) {
+        mDelPressed = false;
     }
 }

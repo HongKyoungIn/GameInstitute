@@ -91,7 +91,7 @@ void ResourceManager::ReleaseAllResources() {
     mBitmapMap.clear();
 }
 
-AnimationAsset* ResourceManager::LoadAnimation(const std::wstring& filePath, int frameCount, float frameDuration) {
+AnimationAsset* ResourceManager::LoadAnimationImage(const std::wstring& filePath, int frameCountX, int frameCountY, float frameDuration) {
     auto it = mAnimations.find(filePath);
     if(it != mAnimations.end()) {
         it->second->AddRef();
@@ -99,7 +99,7 @@ AnimationAsset* ResourceManager::LoadAnimation(const std::wstring& filePath, int
     }
 
     AnimationAsset* animation = new AnimationAsset();
-    if(animation->Load(filePath, frameCount, frameDuration)) {
+    if(animation->LoadSpriteImage(filePath, frameCountX, frameCountY, frameDuration)) {
         mAnimations[filePath] = animation;
         animation->AddRef();
         return animation;

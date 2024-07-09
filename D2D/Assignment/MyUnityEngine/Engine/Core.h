@@ -40,7 +40,7 @@ public:
 	void AddGameObject(GameObject* gameObject);
 	void RemoveGameObject(GameObject* _gameObject);
 
-private:
+protected:
 	std::vector<GameObject*> mGameObjects;
 
 // D2DRenderer

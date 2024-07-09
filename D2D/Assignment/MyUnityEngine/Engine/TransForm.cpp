@@ -14,6 +14,11 @@ void Transform::SetPosition(float _x, float _y) {
     mPosition.y = _y;
 }
 
+void Transform::SetScale(float x, float y) {
+    mScale.x = x;
+    mScale.y = y;
+}
+
 void Transform::SetRotation(float angle) {
     mRotation = angle;
 }
@@ -33,8 +38,9 @@ Transform* Transform::GetParent() const {
 void Transform::Update() {
     D2D1_MATRIX_3X2_F translation = D2D1::Matrix3x2F::Translation(mPosition.x, mPosition.y);
     D2D1_MATRIX_3X2_F rotation = D2D1::Matrix3x2F::Rotation(mRotation);
+    D2D1_MATRIX_3X2_F scale = D2D1::Matrix3x2F::Scale(mScale.x, mScale.y);
 
-    D2D1_MATRIX_3X2_F localTransform = rotation * translation;
+    D2D1_MATRIX_3X2_F localTransform = scale * rotation * translation;
 
     if(mParent) {
         mWorldTransform = localTransform * mParent->GetWorldTransform();
