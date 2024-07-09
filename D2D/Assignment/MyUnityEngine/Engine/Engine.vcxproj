@@ -146,6 +146,7 @@
     <ClInclude Include="CommonInclude.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="TransForm.h" />
+    <ClInclude Include="VideoMemoryDisplay.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationAsset.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="TransForm.cpp" />
+    <ClCompile Include="VideoMemoryDisplay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Engine.rc" />

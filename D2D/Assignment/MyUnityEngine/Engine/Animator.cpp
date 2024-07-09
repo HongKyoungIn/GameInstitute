@@ -43,20 +43,17 @@ void Animator::Render(ID2D1HwndRenderTarget* renderTarget) {
     Transform* transform = mOwner->GetTransform();
 
     // 중심점을 기준으로 위치와 크기 변환을 계산
-    D2D1_POINT_2F center = D2D1::Point2F(
-        transform->GetPosition().x,
-        transform->GetPosition().y
-    );
+    D2D1_POINT_2F position = transform->GetPosition();
 
-    D2D1_MATRIX_3X2_F translation = D2D1::Matrix3x2F::Translation(center.x - mSize.width / 2, center.y - mSize.height / 2);
-    D2D1_MATRIX_3X2_F rotation = D2D1::Matrix3x2F::Rotation(transform->GetRotation(), center);
+    D2D1_MATRIX_3X2_F translation = D2D1::Matrix3x2F::Translation(position.x, position.y);
+    D2D1_MATRIX_3X2_F rotation = D2D1::Matrix3x2F::Rotation(transform->GetRotation());
     D2D1_MATRIX_3X2_F scale;
 
     if(mFlip) {
-        scale = D2D1::Matrix3x2F::Scale(-transform->GetScale().x, transform->GetScale().y, center);
+        scale = D2D1::Matrix3x2F::Scale(-transform->GetScale().x, transform->GetScale().y);
     }
     else {
-        scale = D2D1::Matrix3x2F::Scale(transform->GetScale().x, transform->GetScale().y, center);
+        scale = D2D1::Matrix3x2F::Scale(transform->GetScale().x, transform->GetScale().y);
     }
 
     // 올바른 순서로 변환 적용
@@ -64,10 +61,10 @@ void Animator::Render(ID2D1HwndRenderTarget* renderTarget) {
 
     // 이미지의 크기를 설정한 mSize를 이용해 렌더링
     D2D1_RECT_F destRect = D2D1::RectF(
-        0.0f,
-        0.0f,
-        mSize.width,
-        mSize.height
+        -mSize.width / 2,
+        -mSize.height / 2,
+        mSize.width / 2,
+        mSize.height / 2
     );
 
     renderTarget->DrawBitmap(

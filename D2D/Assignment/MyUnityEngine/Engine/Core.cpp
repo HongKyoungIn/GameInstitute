@@ -155,10 +155,10 @@ LRESULT CALLBACK Core::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
     case WM_KEYDOWN:
         if(wParam == VK_F11) {
             // Toggle fullscreen mode
-            if(Renderer::IsWindowFullscreen(hWnd))
-                Renderer::ExitFullscreen(hWnd);
+            if(mRenderer->IsWindowFullscreen(hWnd))
+                mRenderer->ExitFullscreen(hWnd);
             else
-                Renderer::EnterFullscreen(hWnd);
+                mRenderer->EnterFullscreen(hWnd);
         }
         break;
     case WM_COMMAND:
