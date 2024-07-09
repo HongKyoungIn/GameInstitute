@@ -1,29 +1,47 @@
 #pragma once
-#include "CommonInclude.h"
-#include "Component.h"
+#include <d2d1.h>
+#include <wincodec.h>
+#include <dwrite.h>
+#include <dxgi1_4.h>
+#include <iostream>
+#include "GameObject.h"
 
-#pragma comment(lib,"d2d1.lib")
-#pragma comment(lib,"windowscodecs.lib")
-
+#pragma comment(lib, "d2d1.lib")
+#pragma comment(lib, "windowscodecs.lib")
+#pragma comment(lib, "dxgi.lib")
+#pragma comment(lib, "dwrite.lib")
 
 class Renderer {
 public:
     Renderer();
     Renderer(GameObject* owner);
-    virtual ~Renderer();
+    ~Renderer();
 
-    static BOOL InitDirect2D(HWND hWnd);
-    static void UninitDirect2D();
-    static bool IsWindowFullscreen(HWND hWnd);
-    static void EnterFullscreen(HWND hWnd);
-    static void ExitFullscreen(HWND hWnd);
+    BOOL InitDirect2D(HWND hWnd);
+    void UninitDirect2D();
+    bool IsWindowFullscreen(HWND hWnd);
+    void EnterFullscreen(HWND hWnd);
+    void ExitFullscreen(HWND hWnd);
 
+    size_t GetUsedVRAM();
+    size_t GetTotalVRAM();
+
+    IDWriteTextFormat* GetTextFormat() const { return mTextFormat; }
+    ID2D1SolidColorBrush* GetBrush() const { return mBrush; }
     ID2D1HwndRenderTarget* GetRenderTarget() const { return mRenderTarget; }
     ID2D1Factory* GetFactory() const { return mD2DFactory; }
     IWICImagingFactory* GetWICFactory() const { return mWICFactory; }
+    IDXGIFactory* GetDXGIFactory() const { return mDXGIFactory; }
 
-protected:
+    
+
+private:
     static ID2D1Factory* mD2DFactory;
     static ID2D1HwndRenderTarget* mRenderTarget;
     static IWICImagingFactory* mWICFactory;
+    static IDXGIFactory* mDXGIFactory;
+    static IDXGIAdapter3* mDXGIAdapter;
+    static IDWriteFactory* mDWriteFactory;
+    static IDWriteTextFormat* mTextFormat;
+    static ID2D1SolidColorBrush* mBrush;
 };

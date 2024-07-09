@@ -5,6 +5,11 @@
 ID2D1Factory* Renderer::mD2DFactory = nullptr;
 ID2D1HwndRenderTarget* Renderer::mRenderTarget = nullptr;
 IWICImagingFactory* Renderer::mWICFactory = nullptr;
+IDWriteFactory* Renderer::mDWriteFactory = nullptr;
+IDWriteTextFormat* Renderer::mTextFormat = nullptr;
+ID2D1SolidColorBrush* Renderer::mBrush = nullptr;
+IDXGIFactory* Renderer::mDXGIFactory = nullptr;
+IDXGIAdapter3* Renderer::mDXGIAdapter = nullptr;
 
 Renderer::Renderer() { }
 
@@ -51,6 +56,37 @@ BOOL Renderer::InitDirect2D(HWND hWnd) {
     if(FAILED(hr))
         return FALSE;
 
+    hr = DWriteCreateFactory(
+        DWRITE_FACTORY_TYPE_SHARED,
+        __uuidof(mDWriteFactory),
+        reinterpret_cast<IUnknown**>(&mDWriteFactory));
+    if(FAILED(hr))
+        return FALSE;
+
+    hr = mDWriteFactory->CreateTextFormat(
+        L"Arial", // FontName
+        NULL,
+        DWRITE_FONT_WEIGHT_NORMAL,
+        DWRITE_FONT_STYLE_NORMAL,
+        DWRITE_FONT_STRETCH_NORMAL,
+        15.0f, // Font Size
+        L"", // locale
+        &mTextFormat);
+    if(FAILED(hr))
+        return FALSE;
+
+    hr = mRenderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::White), &mBrush);
+    if(FAILED(hr))
+        return FALSE;
+
+    hr = CreateDXGIFactory1(__uuidof(IDXGIFactory4), (void**)&mDXGIFactory);
+    if(FAILED(hr))
+        return FALSE;
+
+    hr = mDXGIFactory->EnumAdapters(0, reinterpret_cast<IDXGIAdapter**>(&mDXGIAdapter));
+    if(FAILED(hr))
+        return FALSE;
+
     return TRUE;
 }
 
@@ -61,6 +97,14 @@ void Renderer::UninitDirect2D() {
         mRenderTarget->Release();
         mRenderTarget = nullptr;
     }
+    if(mBrush) {
+        mBrush->Release();
+        mBrush = nullptr;
+    }
+    if(mTextFormat) {
+        mTextFormat->Release();
+        mTextFormat = nullptr;
+    }
     if(mWICFactory) {
         mWICFactory->Release();
         mWICFactory = nullptr;
@@ -68,6 +112,18 @@ void Renderer::UninitDirect2D() {
     if(mD2DFactory) {
         mD2DFactory->Release();
         mD2DFactory = nullptr;
+    }
+    if(mDWriteFactory) {
+        mDWriteFactory->Release();
+        mDWriteFactory = nullptr;
+    }
+    if(mDXGIFactory) {
+        mDXGIFactory->Release();
+        mDXGIFactory = nullptr;
+    }
+    if(mDXGIAdapter) {
+        mDXGIAdapter->Release();
+        mDXGIAdapter = nullptr;
     }
 
     CoUninitialize();
@@ -96,4 +152,16 @@ void Renderer::ExitFullscreen(HWND hWnd) {
     SetWindowLong(hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_VISIBLE);
 
     SetWindowPos(hWnd, HWND_TOP, 0, 0, 800, 600, SWP_NOMOVE | SWP_NOZORDER | SWP_FRAMECHANGED);
+}
+
+size_t Renderer::GetUsedVRAM() {
+    DXGI_QUERY_VIDEO_MEMORY_INFO videoMemoryInfo;
+    mDXGIAdapter->QueryVideoMemoryInfo(0, DXGI_MEMORY_SEGMENT_GROUP_LOCAL, &videoMemoryInfo);
+    return videoMemoryInfo.CurrentUsage / 1024 / 1024; // Convert to MB
+}
+
+size_t Renderer::GetTotalVRAM() {
+    DXGI_ADAPTER_DESC desc;
+    mDXGIAdapter->GetDesc(&desc);
+    return desc.DedicatedVideoMemory / 1024 / 1024; // Convert to MB
 }
