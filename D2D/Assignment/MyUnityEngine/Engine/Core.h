@@ -38,7 +38,9 @@ private:
 // Unity Engine
 public:
 	void AddGameObject(GameObject* gameObject);
+	void RemoveSpecificGameObject(const std::string& name);
 	void RemoveGameObject(GameObject* _gameObject);
+	
 
 protected:
 	std::vector<GameObject*> mGameObjects;

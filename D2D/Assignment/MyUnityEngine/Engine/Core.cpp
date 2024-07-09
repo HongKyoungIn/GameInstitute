@@ -122,8 +122,13 @@ ATOM Core::MyRegisterClass(HINSTANCE hInstance) {
 BOOL Core::InitInstance(HINSTANCE hInstance, int nCmdShow) {
     mHInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
+    SIZE clientSize = { 1920, 1080 };
+    RECT clientRect = { 0, 0, clientSize.cx, clientSize.cy };
+    AdjustWindowRect(&clientRect, WS_OVERLAPPEDWINDOW, FALSE);
+
     mHWnd = CreateWindowW(mSzWindowClass, mSzTitle, WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+        0, 0, clientRect.right - clientRect.left, clientRect.bottom - clientRect.top,
+        nullptr, nullptr, hInstance, nullptr);
 
     if(!mHWnd) {
         return FALSE;
@@ -134,7 +139,6 @@ BOOL Core::InitInstance(HINSTANCE hInstance, int nCmdShow) {
 
     return TRUE;
 }
-
 //
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
@@ -206,6 +210,15 @@ void Core::RemoveGameObject(GameObject* gameObject) {
             mGameObjects.erase(mGameObjects.begin() + i);
             delete gameObject;  // 게임 오브젝트 메모리 해제
             return;
+        }
+    }
+}
+
+void Core::RemoveSpecificGameObject(const std::string& name) {
+    for(auto it = mGameObjects.rbegin(); it != mGameObjects.rend(); ++it) {
+        if((*it)->GetName() == name) {
+            RemoveGameObject(*it);
+            break;
         }
     }
 }

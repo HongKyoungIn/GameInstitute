@@ -38,6 +38,10 @@ public:
     void RemoveChild(GameObject* child); // 자식 삭제를 위한 메서드 추가
     const std::vector<GameObject*>& GetChildren() const { return mChildren; }
 
+    const std::string& GetName() const {
+        return mName;
+    }
+
 private:
     std::string mName;
     std::vector<Component*> mComponents;

@@ -10,6 +10,17 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
         return FALSE;
     }
 
+    {
+        GameObject* Background = new GameObject("BackGround");
+        Transform* transform = Background->GetTransform();
+        transform->SetPosition(1920 / 2, 1080 / 2);
+
+        Animator* animator = Background->AddComponent<Animator>();
+        animator->SetAnimation(L"../Resource/midnight.png", 2, 2, 1.0f);  // 8 frames, 0.1 seconds per frame
+        animator->SetSize(1920, 1080);
+        AddGameObject(Background);
+    }
+
     // 부모 오브젝트 생성
     {
         mPlayer1 = new GameObject("Sun");
@@ -62,20 +73,10 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
 
         Animator* animator = player4->AddComponent<Animator>();
         animator->SetAnimation(L"../Resource/Run.png", 8, 1, 0.1f);  // 8 frames, 0.1 seconds per frame
+        animator->SetSize(100, 100);
         animator->SetFlip(true);
         AddGameObject(player4);
     }
-
-    {
-        GameObject* player = new GameObject("BackGround");
-        Transform* transform = player->GetTransform();
-        transform->SetPosition(0, 0);
-
-        Animator* animator = player->AddComponent<Animator>();
-        animator->SetAnimation(L"../Resource/midnight.png", 4, 2, 0.1f);  // 8 frames, 0.1 seconds per frame
-        AddGameObject(player);
-    }
-    
     // 자식 오브젝트 제거 테스트
     // RemoveGameObject(mPlayer1);
 
@@ -101,6 +102,7 @@ void Game1::CreateCharacter(D2D1_POINT_2F position, const std::wstring& filePath
     transform->SetPosition(position.x, position.y);
 
     Animator* animator = character->AddComponent<Animator>();
+    animator->SetSize(100, 100);
     animator->SetAnimation(filePath, frameCountX, frameCountY, frameDuration);
 
     AddGameObject(character);
@@ -119,7 +121,7 @@ void Game1::HandleInput() {
     if(GetAsyncKeyState(VK_DELETE) & 0x8000 && !mDelPressed) {
         mDelPressed = true;
         if(!mGameObjects.empty()) {
-            RemoveGameObject(mGameObjects.back());
+            RemoveSpecificGameObject("Character");
         }
     }
     else if(!(GetAsyncKeyState(VK_DELETE) & 0x8000)) {
