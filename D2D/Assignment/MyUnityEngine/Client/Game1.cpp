@@ -26,34 +26,34 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
 	 
 	{ 
 		// 반전된 Run 애니메이션
-		GameObject* player4 = new GameObject("Player1");
-		Transform* transform = player4->GetTransform();
-		transform->SetPosition(500, 400);
+		GameObject* player1 = new GameObject("Player1");
+		Transform* transform = player1->GetTransform();
+		transform->SetPosition(400, 400);
 		
-		Animator* animator = player4->AddComponent<Animator>();
+		Animator* animator = player1->AddComponent<Animator>();
 		animator->SetFlip(true);
 		animator->SetAnimation(L"../Resource/Run.png", 10, 1, 0.1f);  // 8 frames, 0.1 seconds per frame
 		animator->SetSize(100, 100);
-		AddGameObject(player4);
+		AddGameObject(player1);
 	}
 
 	{
 		// 정상 Run 애니메이션
-		GameObject* player5 = new GameObject("Player2");
-		Transform* transform = player5->GetTransform();
-		transform->SetPosition(500, 400);
+		GameObject* player2 = new GameObject("Player2");
+		Transform* transform = player2->GetTransform();
+		transform->SetPosition(500, 500);
 
-		Animator* animator = player5->AddComponent<Animator>();
+		Animator* animator = player2->AddComponent<Animator>();
 		animator->SetAnimation(L"../Resource/Run.png", 10, 1, 0.1f);  // 8 frames, 0.1 seconds per frame
 		animator->SetSize(100, 100);
-		AddGameObject(player5);
+		AddGameObject(player2);
 	}
 
 	{
 		// VRAM 사용량 출력
 		GameObject* VRAM = new GameObject("VRAM");
 		Transform* transform = VRAM->GetTransform();
-		transform->SetPosition(0, 0);
+		transform->SetPosition(10, 10);
 		transform->SetScale(2, 2);
 		VideoMemoryDisplay* videoMemoryDisplay = VRAM->AddComponent<VideoMemoryDisplay>();
 		AddGameObject(VRAM);

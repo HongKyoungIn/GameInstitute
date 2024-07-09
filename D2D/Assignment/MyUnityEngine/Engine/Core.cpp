@@ -34,6 +34,8 @@ bool Core::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
 
 void Core::Uninitialize() {
     for(GameObject* gameObject : mGameObjects) {
+        std::cout << "gameObject Release" << std::endl;
+        Sleep(100);
         delete gameObject;
     }
     mGameObjects.clear();

@@ -8,6 +8,8 @@ Animator::Animator(GameObject* owner) :
 
 Animator::~Animator() {
     if(currentAnimation) {
+        std::cout << "Animator Release" << std::endl;
+        Sleep(100);
         ResourceManager::GetInstance()->ReleaseAnimation(currentAnimationFilePath);
     }
 }

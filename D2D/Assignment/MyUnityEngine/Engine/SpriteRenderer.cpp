@@ -11,7 +11,7 @@ SpriteRenderer::~SpriteRenderer() {
     if(mBitmap) {
         mBitmap->Release();
         std::cout << "SpriteRenderer Release" << std::endl;
-        Sleep(500);
+        Sleep(100);
         mBitmap = nullptr;
     }
 }

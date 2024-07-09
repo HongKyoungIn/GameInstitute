@@ -32,6 +32,7 @@ public:
     ID2D1Factory* GetFactory() const { return mD2DFactory; }
     IWICImagingFactory* GetWICFactory() const { return mWICFactory; }
     IDXGIFactory* GetDXGIFactory() const { return mDXGIFactory; }
+    IDWriteFactory* GetDWriteFactory() const { return mDWriteFactory; }
 
     
 

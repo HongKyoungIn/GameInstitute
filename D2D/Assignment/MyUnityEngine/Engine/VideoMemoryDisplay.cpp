@@ -21,10 +21,45 @@ void VideoMemoryDisplay::Update() {
 }
 
 void VideoMemoryDisplay::Render(ID2D1HwndRenderTarget* renderTarget) {
+
     D2D1_POINT_2F position = mOwner->GetTransform()->GetPosition();
+    D2D1_MATRIX_3X2_F worldTransform = mOwner->GetTransform()->GetWorldTransform();
+
+    renderTarget->SetTransform(worldTransform);
     D2D1_RECT_F layoutRect = D2D1::RectF(position.x, position.y, position.x + 200, position.y + 50);
     renderTarget->DrawTextW(mText.c_str(), mText.length(), mTextFormat, layoutRect, mBrush);
 }
+
+
+//void VideoMemoryDisplay::Render(ID2D1HwndRenderTarget* renderTarget) {
+//    D2D1_POINT_2F position = mOwner->GetTransform()->GetPosition();
+//    D2D1_MATRIX_3X2_F worldTransform = mOwner->GetTransform()->GetWorldTransform();
+//
+//    renderTarget->SetTransform(worldTransform);
+//
+//    // 텍스트 레이아웃을 생성하여 크기를 계산합니다.
+//    IDWriteTextLayout* pTextLayout = nullptr;
+//    Renderer* renderer = Core::GetRenderer();
+//    renderer->GetDWriteFactory()->CreateTextLayout(
+//        mText.c_str(),
+//        (UINT32)mText.length(),
+//        mTextFormat,
+//        200.0f, // 임의의 최대 너비
+//        50.0f,  // 임의의 최대 높이
+//        &pTextLayout
+//    );
+//
+//    DWRITE_TEXT_METRICS textMetrics;
+//    pTextLayout->GetMetrics(&textMetrics);
+//
+//    float halfWidth = textMetrics.width / 2.0f;
+//    float halfHeight = textMetrics.height / 2.0f;
+//
+//    D2D1_RECT_F layoutRect = D2D1::RectF(position.x - halfWidth, position.y - halfHeight, position.x + halfWidth, position.y + halfHeight);
+//    renderTarget->DrawTextLayout(D2D1::Point2F(position.x - halfWidth, position.y - halfHeight), pTextLayout, mBrush);
+//
+//    pTextLayout->Release();
+//}
 
 SIZE_T VideoMemoryDisplay::GetUsedVRAM() {
     IDXGIAdapter* pAdapter = nullptr;
