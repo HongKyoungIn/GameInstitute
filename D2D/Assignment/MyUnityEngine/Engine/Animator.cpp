@@ -42,17 +42,44 @@ void Animator::Render(ID2D1HwndRenderTarget* renderTarget) {
     const FrameInfo& frame = currentAnimation->GetFrames()[currentFrameIndex];
     Transform* transform = mOwner->GetTransform();
 
-    D2D1_MATRIX_3X2_F translation = D2D1::Matrix3x2F::Translation(transform->GetPosition().x - frame.center.x, transform->GetPosition().y - frame.center.y);
-    D2D1_MATRIX_3X2_F rotation = D2D1::Matrix3x2F::Rotation(transform->GetRotation(), transform->GetPosition());
+    // 중심점을 기준으로 위치와 크기 변환을 계산
+    D2D1_POINT_2F center = D2D1::Point2F(
+        transform->GetPosition().x,
+        transform->GetPosition().y
+    );
+
+    D2D1_MATRIX_3X2_F translation = D2D1::Matrix3x2F::Translation(center.x - mSize.width / 2, center.y - mSize.height / 2);
+    D2D1_MATRIX_3X2_F rotation = D2D1::Matrix3x2F::Rotation(transform->GetRotation(), center);
     D2D1_MATRIX_3X2_F scale;
 
     if(mFlip) {
-        scale = D2D1::Matrix3x2F::Scale(-transform->GetScale().x, transform->GetScale().y, transform->GetPosition());
+        scale = D2D1::Matrix3x2F::Scale(-transform->GetScale().x, transform->GetScale().y, center);
     }
     else {
-        scale = D2D1::Matrix3x2F::Scale(transform->GetScale().x, transform->GetScale().y, transform->GetPosition());
+        scale = D2D1::Matrix3x2F::Scale(transform->GetScale().x, transform->GetScale().y, center);
     }
 
+    // 올바른 순서로 변환 적용
     renderTarget->SetTransform(scale * rotation * translation);
-    renderTarget->DrawBitmap(currentAnimation->GetBitmap(), D2D1::RectF(0.0f, 0.0f, frame.sourceRect.right - frame.sourceRect.left, frame.sourceRect.bottom - frame.sourceRect.top), 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, frame.sourceRect);
+
+    // 이미지의 크기를 설정한 mSize를 이용해 렌더링
+    D2D1_RECT_F destRect = D2D1::RectF(
+        0.0f,
+        0.0f,
+        mSize.width,
+        mSize.height
+    );
+
+    renderTarget->DrawBitmap(
+        currentAnimation->GetBitmap(),
+        destRect,
+        1.0f,
+        D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+        frame.sourceRect
+    );
+}
+
+void Animator::SetSize(float width, float height) {
+    mSize.width = width;
+    mSize.height = height;
 }
