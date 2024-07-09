@@ -8,7 +8,7 @@ Animator::Animator(GameObject* owner) :
 
 Animator::~Animator() {
     if(currentAnimation) {
-        std::cout << "Animator Release" << std::endl;
+        std::wcout << L"Releasing animation: " << currentAnimationFilePath << std::endl;
         Sleep(100);
         ResourceManager::GetInstance()->ReleaseAnimation(currentAnimationFilePath);
     }
@@ -19,11 +19,10 @@ void Animator::SetAnimation(const std::wstring& filePath, int frameCountX, int f
         ResourceManager::GetInstance()->ReleaseAnimation(currentAnimationFilePath);
     }
 
+    currentAnimationFilePath = filePath;
     currentAnimation = ResourceManager::GetInstance()->LoadAnimationImage(filePath, frameCountX, frameCountY, frameDuration);
-    if(currentAnimation) {
-        currentFrameIndex = 0;
-        currentTime = 0.0f;
-    }
+    currentFrameIndex = 0;
+    currentTime = 0.0f;
 }
 
 void Animator::Update() {

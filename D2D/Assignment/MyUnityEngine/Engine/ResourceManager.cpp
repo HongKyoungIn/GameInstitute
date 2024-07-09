@@ -4,7 +4,7 @@
 ResourceManager::ResourceManager() { }
 
 ResourceManager::~ResourceManager() {
-    // ReleaseAllResources();
+    ReleaseAllResources();
 }
 
 void ResourceManager::SafeRelease(IUnknown* resource) {
@@ -111,11 +111,17 @@ AnimationAsset* ResourceManager::LoadAnimationImage(const std::wstring& filePath
 }
 
 void ResourceManager::ReleaseAnimation(const std::wstring& filePath) {
+    std::wcout << L"Releasing animation for file path: " << filePath << std::endl;
     auto it = mAnimations.find(filePath);
     if(it != mAnimations.end()) {
+        std::wcout << L"Found animation for file path: " << filePath << std::endl;
         it->second->Release();
         if(it->second->GetRefCount() == 0) {
+            std::wcout << L"Erasing animation for file path: " << filePath << std::endl;
             mAnimations.erase(it);
         }
+    }
+    else {
+        std::wcout << L"Animation not found for file path: " << filePath << std::endl;
     }
 }
