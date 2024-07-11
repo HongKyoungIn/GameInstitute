@@ -1,7 +1,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 
-GameObject::GameObject(const std::string& name) : mName(name) {
+GameObject::GameObject(const std::string& name) : mParent(nullptr), mName(name), mLayer(0) {
     mTransform = new Transform(this);
     mComponents.push_back(mTransform); // Transform을 컴포넌트 리스트에 추가
 }
@@ -45,4 +45,12 @@ void GameObject::RemoveChild(GameObject* child) {
             return;
         }
     }
+}
+
+void GameObject::SetLayer(int layer) {
+    mLayer = layer;
+}
+
+int GameObject::GetLayer() const {
+    return mLayer;
 }

@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "Renderer.h"
 #include "TimeManager.h"
+#include <algorithm>
 
 #define MAX_LOADSTRING 100
 

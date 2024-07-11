@@ -83,6 +83,10 @@ void Core::FixedUpdate() {
 }
 
 void Core::Render() {
+    std::sort(mGameObjects.begin(), mGameObjects.end(), [](GameObject* a, GameObject* b) {
+        return a->GetLayer() < b->GetLayer();
+    });
+
     for(GameObject* gameObject : mGameObjects) {
         gameObject->Render(mRenderer->GetRenderTarget());
     }

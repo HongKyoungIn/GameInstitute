@@ -42,10 +42,14 @@ public:
         return mName;
     }
 
+    void SetLayer(int layer);
+    int GetLayer() const;
+
 private:
     std::string mName;
     std::vector<Component*> mComponents;
     std::vector<GameObject*> mChildren; // 자식 GameObject를 저장하는 벡터
     GameObject* mParent;
     Transform* mTransform;
+    int mLayer;
 };
