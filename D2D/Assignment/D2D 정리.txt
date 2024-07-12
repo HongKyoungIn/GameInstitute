@@ -1,0 +1,199 @@
+[5장 D2D 개요]
+1. ID2DFactory
+ID2DFactory - 장치와 독립적. 한 번 생성한 후 응용이 종료되기 전까지 유지해야한다.
+ID2D1Factory 인터페이스는 Direct2D를 사용하기 위한 시작점입니다. 셰이프를 그리거나 설명하는 데 사용할 수 있는 다른 Direct2D 리소스를 만드는 데 사용합니다.
+
+D2D1CreateFactory(스레드 동기화 여부, 저장할 주소)
+- SINGLE_THREADED : 하나의 단일 스레드가 이 장치 관련 자원을 접근
+- MULTI_THREADED : 여러 스레드가 이 장치 관련 자원을 동시에 처리하는 경우
+
+2. Render Target
+- 그리기 연산을 수행하는 중요한 추상화된 장치
+- 브러시 등과 같은 장치와 관련된 그리기 자원들을 생성할 수 있다.
+- 일반적으로 화면에 표시되는 그래픽은 렌더 타겟에 그려진 후 화면으로 출력됩니다.
+- 한 번 렌더타겟이 생성된 후에는 응용 프로그램이 종료되기 전까지 생성된 렌더타겟을 유지해야 한다.
+- 만약 에러가 발생하면 렌더타겟 및 관련 자원들을 다시 생성해야 한다.
+
+(1) HwndRenderTarget
+- ID2D1HwndRenderTarget: 윈도우 핸들(HWND)을 대상으로 하는 렌더 타겟입니다. 주로 화면에 직접 그리는 데 사용됩니다.
+- 첫 번째 인자 : D2D1_RENDER_TARGET_PROPERTIES 구조체. 렌더 주체(SW/HW), DPI 등
+- 두 번째 인자 : D2D1_HWND_RENDER_TARGET_PROPERTIES 구조체. 렌더될 HWND, 초기 픽셀단위, 표현 옵션
+- 세 번째 인자 : 리턴될 렌더타겟 객체 포인터 주소
+
+(2) BitmapRenderTarget
+- ID2D1BitmapRenderTarget: 비트맵을 대상으로 하는 렌더 타겟입니다. 오프스크린 렌더링에 사용됩니다.
+
+[6장 렌더타겟]
+1. 렌더타겟의 인자
+(1) 첫 번째 인자 - D2D_RENDER_TARGET_PROPERTIES 구조체
+typedef struct D2D1_RENDER_TARGET_PROPERTIES {
+  D2D1_RENDER_TARGET_TYPE  type;
+  D2D1_PIXEL_FORMAT        pixelFormat;
+  FLOAT                    dpiX;
+  FLOAT                    dpiY;
+  D2D1_RENDER_TARGET_USAGE usage;
+  D2D1_FEATURE_LEVEL       minLevel;
+}
+(2) 두 번째 인자 - D2D_HWND_RENDER_TARGET_PROPERTIES 구조체
+typedef struct D2D1_HWND_RENDER_TARGET_PROPERTIES {
+  HWND                 hwnd;
+  D2D1_SIZE_U          pixelSize;
+  D2D1_PRESENT_OPTIONS presentOptions;
+}
+
+(3) 픽셀 포맷
+- format : 각 픽셀 포맷을 명시한다. 열거형 상수 DXGI_FORMAT_XXX 중 하나를 지정하면 된다.
+- alphaMode : 알파 정보의 해석 방법을 명시한다. 열거형 상수 D2D1_ALPHA_MODE_XXX 중 하나를 지정하면 된다.
+알파 채널은 픽셀 포맷의 일부로 범위 정보나 불투명 정보를 명시한다.
+
+2. 자원
+- D2DFactory : 최상위의 D2D 자원 객체를 생성하는 함수를 제공한다.
+- ID2D1Resource : D2D의 최상위 지원 객체이다.
+- D2DFactory를 제외한 모든 객체들은 이 인터페이스를 상속하여 구현되었다.
+- 장치 독립적 자원은 CPU에서 관리하는 자원으로 GPU 장치와 무관하다.
+
+* 장치 독립적 자원(CPU) - 이들은 렌더링 하드웨어와 연관되어 있지 않다. 즉, GPU와 무관하게 응용 프로그램의 수명 동안 계속 존재할 수 있다.
+▶ ID2D1DrawingStateBlock
+▶ ID2D1Factory
+▶ ID2D1Geometry 및 이를 상속한 인터페이스들
+▶ ID2D1GeometrySink 및 ID2D1SimplifiedGeometrySink
+▶ ID2D1StrokeStyle
+
+* 장치 의존적 자원(GPU) 
+▶ ID2D1Brush와 이를 상속한 것들
+▶ ID2D1Layer
+▶ ID2D1RenderTarget와 이를 상속한 것들
+- 장치 의존적 자원은 렌더타겟의 함수를 호출하여 생성한다.
+
+(1) 자원의 생성
+■ ID2D1Factory 인터페이스
+- 팩토리란 다른 객체들을 생성하는 객체의 의미로 사용된다.
+- 렌더타겟들과 장치 독립적 자원들을 생성하는 기능을 제공한다.
+- 렌더타겟은 그리기 명령들을 수행하는 객체이다.
+- 기하는 모양을 표현하는 객체이다.
+- 그리기 상태 블록은 그리기 상태 정보를 저장하는 객체이다.
+
+■ 팩토리 자원의 공유
+- 팩토리가 생성한 모든 장치 독립 자원들은 동일 팩토리가 생성한 모든 자원들과 공유될 수 있다.
+- 싱크 인터페이스는 어떤 팩토리가 생성한 자원과도 공유될 수 있다.
+
+■ 렌더타겟 자원의 공유
+- 한 렌더타겟이 생성한 자원을 공유할 수 있는지의 여부는 렌더타겟의 종류에 따라 다르다.
+- 예를들어 DEFAULT로 생성한 경우, 이 렌더타겟이 생성한 자원은 일반적으로 그 렌더타겟만 사용할 수 있다.
+
+(2) 효율적인 자원의 사용
+■ 자원의 재사용
+- 하드웨어가 자원의 생성 및 소멸을 수행하는 경우 비디오카드와 과도한 통신이 필요하므로 비용이 비싸다.
+- 따라서 가급적 소프트웨어적으로 자원을 재사용해야 효율적이다.
+EX) 비트맵 자원들은 응용 프로그램 시작 시점에서 생성하며 생성한 자원을 반복해서 재사용한다.
+하지만 윈도우 크기 변경 연산의 경우 스케일에 의존된 자원들은 모두 재생성 해야한다.
+
+3. 변환
+(1) 변환
+■ 변환의 기능
+- 한 좌표 공간에서 정의된 위치를 동일 좌표 공간 또는 다른 좌표 공간에서의 위치로 매핑하는 기능을 수행한다.
+
+■ 변환의 표현
+- 동차 좌표로 표현한 점 v를 다른 점 v` 로 변환하는 경우 "v` = vT" 로 표현된다.
+- 여기서 T와 같이 변환을 표현하는 행렬을 변환 행렬이라고 한다.
+- 변환행렬 T는 float 값들의 3x3 배열로 표현된다.
+
+■ 변환의 특성
+- 변환 행렬은 크기조정(scale), 회전(rotation), 기울임(skew), 이동(translation) 요소들을 포함할 수 있다.
+
+(2) 변환행렬의 표현과 생성
+■ 변환행렬의 표현
+- D2D 에서는 3x2 부분 행렬의 표현을 위한 구조체인 D2D1_MATRIX_3X2_F 타입을 제공한다.
+- 또한 이 구조체를 상속하여 만든 클래스인 Matrix3x2F를 제공한다.
+- Matrix3x2F의 디폴트 생성자는 행렬 값들을 초기화 하지 않는다.
+[ m11 m12 ] - x축의 스케일 및 회전을 정의합니다.
+[ m21 m22 ] - y축의 스케일 및 회전을 정의합니다.
+[ m31 m32 ] - x 및 y축의 변환을 정의합니다.
+
+■ 변환행렬의 생성
+- 클래스 Matrix3x2F는 항등행렬(Identity matrix)을 생성하는 정적 함수인 Identity를 제공한다.
+
+■ 변환행렬의 적용
+- 변환행렬을 적용하는 대상은 렌더타겟이다. 
+- 변환행렬을 렌더타겟에 적용하기 위해서는 ID2D1RenderTarget의 SetTransform 함수를 호출하면 된다. 
+- 렌더타겟의 변환행렬을 초기화 하는 것이 바람직하다. 그러기 위해선 항등행렬로 렌더타겟의 SetTransform 함수를 호출하면 된다.
+mRenderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+
+① Rotation(회전)
+[ cos@  sin@ ]
+[ -sin@ cos@ ]
+[    0       0    ]
+- 회전은 Matrix3x2F의 Rotation 함수를 호출하여 생성한다. 원형은 다음과 같다
+※ static Matrix3x2F Rotation(FLOAT angle, D2D1_POINT_2F centerPoint = D2D1::Point2F());
+- angle은 회전 각도이다. 라디안이 아닌 각도(degree) 단위로 명시한다.
+- centerPoint는 회전 중심점의 위치이다. 위치는 객체의 좌표계로 표현된다.
+
+② Scaling
+[ sx   0 ]
+[ 0   sy ]
+[ 0    0 ]
+※ Matrix3x2F::Scale(D2D1_SIZE_F scaleFactor, D2D1_POINT_2F centerPoint)
+Matrix3x2F::Scale(float scaleX, float scaleY, D2D1_POINT_2F centerPoint)
+D2D1_SIZE_F = (float width, float height)
+
+③ Skew(기울기)
+[ 1, tan@x ]
+[ tan@y, 1 ]
+[ 0         0 ]
+※ static Matrix3x2F Matrix3x2F::Skew( FLOAT angleX, FLOAT angleY, D2D1_POINT_2F centerPoint = D2D1::Point2F());
+- 인자 angleX, angleY는 x축과 y축으로의 기울임 각도이며 각도(degree) 단위로 주어진다.
+- 인자 centerPoint는 기울이미 수행되는 지점의 위치이다.
+
+④ Translation
+[ 1    0 ]
+[ 0    1 ]
+[ dx dy ]
+※ static Matrix3x2F Matrix3x2F::Translation( D2D1_SIZE_F trans );
+※ static Matrix3x2F Matrix3x2F::Translation( FLOAT transX, FLOAT transY);
+
+(3) 여러 변환들을 적용하기
+■ 복합 변환
+- 여러 변환들을 하나의 변환으로 결합한 변환을 적용하는 것과 같다.
+v`` = vTT`
+- 주의할 점은 행렬 곱은 교환 법칙이 성립하지 않으므로 복합 행렬 변환을 구성함에 있어 행렬의 적용 순서가 중요하다.
+
+(4) 붓에 변환 적용하기
+■ 붓에 변환을 적용하는 개념
+- 붓에 변환을 적용하는 것은 고정된 스탠실 하단에 있는 벽지를 움직이는 것과 같다.
+- 따라서 변환을 붓에 적용하면 렌더링 객체의 외양이 페이드(fade) 되는 효과를 쉽게 구현할 수 있다.
+
+■ 붓에 변환 적용하기
+- 붓 변환은 붓 좌표들이 어떻게 렌더타겟의 좌표 공간에 매핑될 지를 명시한다.
+- 변환을 붓에 적용하기 위해선 ID2D1Brush의 SetTransform 함수를 호출하면 된다.
+
+■ 붓 공간
+- 붓의 그림이 그려지는 '붓 공간'은 '렌더타겟의 현재 좌표계'에 '붓 변환'을 적용한 공간이다.
+- 붓 공간은 그릴 객체에 상대적인 공간이 아니라 항상 고정된 절대 공간이다.
+- 따라서 붓을 객체에 상대적으로 채우기 위해서는, 붓 공간의 원점을 물체의 경계상자의 왼쪽 상단 모서리로 이동하고, 기본 타일이 객체의 경계상자를 가득 채우도록 붓 공간을 크기 조정(scale) 해야한다.(?)
+
+(5) 기하에 변환 적용하기
+■ 기하에 변환을 적용하는 개념
+- 렌더타겟에 지정한 변환은 이후에 그려지는 모든 객체들에 적용된다. 예를들어 크키가 커지도록 변환을 적용한 경우 획의 두께도 함께 두껍게 그려진다.
+- 변환이 특정 기하에 대해서만 적용되도록 하기 위해선 새로 생성되는 기하는 원래의 기하의 좌표들을 변환하고 그 결과의 변환된 좌표들로 구성하는 기하이다.
+
+■ 기하에 변환을 적용하기
+- 기하에 변환을 적용하는 방법은 ID2D1Factory의 CreateTransformedGeometry 함수를 호출하여 새로운 변환된 기하 객체를 생성하면 된다.
+- 새로운 변환된 기하 객체는 ID2D1TransformedGeometry 객체로 표현된다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
