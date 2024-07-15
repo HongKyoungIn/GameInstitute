@@ -16,6 +16,9 @@
     <Filter Include="헤더 파일\Default">
       <UniqueIdentifier>{90fb0189-1454-4385-8c99-e03277548dfe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{af4e564c-f20c-4995-8530-85879f0f6ff6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game1.h">
@@ -29,6 +32,12 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>헤더 파일\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMove.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseScript.h">
+      <Filter>Scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +59,12 @@
     </ClCompile>
     <ClCompile Include="Game1.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMove.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseScript.cpp">
+      <Filter>Scripts</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

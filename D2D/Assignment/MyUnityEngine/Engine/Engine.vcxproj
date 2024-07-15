@@ -136,6 +136,7 @@
     <ClInclude Include="Defines.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="RectangleRenderer.h" />
     <ClInclude Include="ReferenceCounter.h" />
     <ClInclude Include="Renderer.h" />
@@ -155,6 +156,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="RectangleRenderer.cpp" />
     <ClCompile Include="ReferenceCounter.cpp" />
     <ClCompile Include="Renderer.cpp" />

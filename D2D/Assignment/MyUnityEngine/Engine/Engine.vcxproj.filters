@@ -81,6 +81,9 @@
     <ClInclude Include="Defines.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -124,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="VideoMemoryDisplay.cpp">
       <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -5,6 +5,7 @@
 #include "../Engine/ResourceManager.h"
 #include "../Engine/Animator.h"
 #include "../Engine/VideoMemoryDisplay.h"
+#include "PlayerMove.h"
 
 bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
 	if(!Core::Initialize(hInstance, nCmdShow)) {
@@ -44,6 +45,7 @@ bool Game1::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
 		Transform* transform = player2->GetTransform();
 		transform->SetPosition(500, 500);
 		player2->SetLayer(1);  // 플레이어 레이어
+		PlayerMove* playerMove = player2->AddComponent<PlayerMove>();
 
 		Animator* animator = player2->AddComponent<Animator>();
 		animator->SetAnimation(L"../Resource/Run.png", 10, 1, 0.1f);  // 8 frames, 0.1 seconds per frame

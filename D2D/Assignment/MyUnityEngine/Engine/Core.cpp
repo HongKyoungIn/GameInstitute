@@ -4,6 +4,7 @@
 #include "Core.h"
 #include "Renderer.h"
 #include "GameObject.h"
+#include "InputManager.h"
 
 Renderer* Core::mRenderer = nullptr; // 정적 멤버 변수 초기화
 
@@ -45,6 +46,8 @@ void Core::Uninitialize() {
         delete mRenderer;
         mRenderer = nullptr;
     }
+
+    InputManager::DestroyInstance();
 }
 
 void Core::Loop(MSG& msg) {
@@ -59,6 +62,7 @@ void Core::Loop(MSG& msg) {
         }
         else {
             TimeManager::GetInstance()->Update();
+            InputManager::GetInstance()->Update();
             Update();
             if(TimeManager::GetInstance()->ShouldFixedUpdate()) {
                 FixedUpdate();
@@ -159,6 +163,7 @@ LRESULT CALLBACK Core::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
     switch(message) {
 
     case WM_KEYDOWN:
+        InputManager::GetInstance()->OnKeyDown(static_cast<unsigned char>(wParam));
         if(wParam == VK_F11) {
             // Toggle fullscreen mode
             if(mRenderer->IsWindowFullscreen(hWnd))
@@ -167,6 +172,11 @@ LRESULT CALLBACK Core::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
                 mRenderer->EnterFullscreen(hWnd);
         }
         break;
+
+    case WM_KEYUP:
+        InputManager::GetInstance()->OnKeyUp(static_cast<unsigned char>(wParam));
+        break;
+        
     case WM_COMMAND:
     {
         int wmId = LOWORD(wParam);
