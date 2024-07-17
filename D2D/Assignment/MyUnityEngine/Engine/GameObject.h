@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include <vector>
 #include <string>
+#include "AABB.h"
 
 class GameObject {
 public:
@@ -44,6 +45,8 @@ public:
 
     void SetLayer(int layer);
     int GetLayer() const;
+
+    AABB GetAABB() const;
 
 private:
     std::string mName;

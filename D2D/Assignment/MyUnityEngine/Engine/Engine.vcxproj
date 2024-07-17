@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
     <ClInclude Include="AnimationAsset.h" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Component.h" />
@@ -142,6 +143,8 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Spinning.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="targetver.h" />
@@ -151,6 +154,7 @@
     <ClInclude Include="VideoMemoryDisplay.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AABB.cpp" />
     <ClCompile Include="AnimationAsset.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -161,6 +165,8 @@
     <ClCompile Include="ReferenceCounter.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Spinning.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="TimeManager.cpp" />

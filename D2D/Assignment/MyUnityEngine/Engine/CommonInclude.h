@@ -11,5 +11,7 @@
 #include <wincodec.h>
 #include <comdef.h>
 #include <iostream>
+#include <algorithm>
+#include <functional>
 
 using namespace std;

@@ -1,31 +1,12 @@
 #pragma once
+#include <d2d1.h>
 
-/*
-	AABB (Axis-Aligned Bounding Box) 축 정렬된 경계 상자
-
-	  +y
-	  ^
-	  |         +----------------------max
-	  |         |                      |
-	  |         |		 center        |
-	  |	        |          +---------- |
-	  |         |          |  extend.x |
-	  |         |  extend.y|           |
-	  |         min--------------------+
-	--+------------------------------------> +x
-   0,0
-*/
-class AABB
-{
+class AABB {
 public:
 	AABB() : m_Center{ 0 }, m_Extent{ 0 } { }
-public:
-	D2D1_VECTOR_2F m_Center; // 중앙
-	D2D1_VECTOR_2F m_Extent; // x,y축 확장값	
-	// minX = m_Center.x - m_Extent.x
-	// maxX = m_Center.x + m_Extent.x
-	// minY = m_Center.y - m_Extent.y
-	// maxY = m_Center.y + m_Extent.y
+
+	D2D1_POINT_2F m_Center; // 중앙
+	D2D1_POINT_2F m_Extent; // x,y축 확장값	
 
 	AABB(const AABB&) = default;
 	AABB& operator=(const AABB&) = default;
@@ -40,30 +21,21 @@ public:
 	float GetMinY() { return m_Center.y - m_Extent.y; }
 	float GetMaxY() { return m_Center.y + m_Extent.y; }
 
-	bool CheckIntersect(const AABB& other) const
-	{
-		// self min,max
+	bool CheckIntersect(const AABB& other) const {
 		float BoxA_xmin = m_Center.x - m_Extent.x;
 		float BoxA_xmax = m_Center.x + m_Extent.x;
 		float BoxA_ymin = m_Center.y - m_Extent.y;
 		float BoxA_ymax = m_Center.y + m_Extent.y;
 
-		// other min,max
 		float BoxB_xmin = other.m_Center.x - other.m_Extent.x;
 		float BoxB_xmax = other.m_Center.x + other.m_Extent.x;
 		float BoxB_ymin = other.m_Center.y - other.m_Extent.y;
 		float BoxB_ymax = other.m_Center.y + other.m_Extent.y;
 
-		// Check for no overlap conditions
-		if (BoxA_xmax < BoxB_xmin ||  // 오른쪽에 있으면 겹칠수가 없음
-			BoxA_xmin > BoxB_xmax ||  // 왼쪽에 있으면 겹칠수가 없음
-			BoxA_ymax < BoxB_ymin ||  // 아래에 있으면 겹칠수가 없음
-			BoxA_ymin > BoxB_ymax)	  // 위에 있으면 겹칠수가 없음
-		{
+		if(BoxA_xmax < BoxB_xmin || BoxA_xmin > BoxB_xmax || BoxA_ymax < BoxB_ymin || BoxA_ymin > BoxB_ymax) {
 			return false;
 		}
 
 		return true;
-
 	}
 };

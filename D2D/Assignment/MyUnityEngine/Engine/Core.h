@@ -4,7 +4,7 @@
 #include "GameObject.h"
 #include "Renderer.h"
 #include "TimeManager.h"
-#include <algorithm>
+#include "SceneManager.h"
 
 #define MAX_LOADSTRING 100
 
@@ -34,14 +34,7 @@ private:
 	WCHAR mSzWindowClass[MAX_LOADSTRING]; // 기본 창 클래스 이름입니다.
 
 	static LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
-// WindowAPI End
-
-// Unity Engine
-public:
-	void AddGameObject(GameObject* gameObject);
-	void RemoveSpecificGameObject(const std::string& name);
-	void RemoveGameObject(GameObject* _gameObject);
-	
+// WindowAPI End	
 
 protected:
 	std::vector<GameObject*> mGameObjects;

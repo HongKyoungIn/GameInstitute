@@ -1,4 +1,4 @@
-#include "Game1.h"
+#include "GameProject.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
@@ -15,16 +15,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	atexit(f1);
 	//_CrtSetBreakAlloc(210);
-	Game1 app;
+	GameProject project;
 
-	if(app.Initialize(hInstance, nCmdShow) == FALSE) {
+	if(project.Initialize(hInstance, nCmdShow) == FALSE) {
 		return FALSE;
 	}
 
 	MSG msg;
-	app.Loop(msg);
+	project.Loop(msg);
 
-	app.Uninitialize();
+	project.Uninitialize();
 
 	return (int)msg.wParam;
 }

@@ -76,26 +76,6 @@ void Core::Loop(MSG& msg) {
     }
 }
 
-void Core::Update() {
-    for(GameObject* gameObject : mGameObjects) {
-        gameObject->Update();
-    }
-}
-
-void Core::FixedUpdate() {
-    // FixedUpdate가 필요한 경우, 이곳에 추가적인 업데이트 로직을 작성합니다.
-}
-
-void Core::Render() {
-    std::sort(mGameObjects.begin(), mGameObjects.end(), [](GameObject* a, GameObject* b) {
-        return a->GetLayer() < b->GetLayer();
-    });
-
-    for(GameObject* gameObject : mGameObjects) {
-        gameObject->Render(mRenderer->GetRenderTarget());
-    }
-}
-
 //  함수: MyRegisterClass()
 //
 //  용도: 창 클래스를 등록합니다.
@@ -207,36 +187,17 @@ LRESULT CALLBACK Core::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
     return 0;
 }
 
-void Core::AddGameObject(GameObject* gameObject) {
-    mGameObjects.push_back(gameObject);
+
+void Core::Update() {
+    SceneManager::GetInstance()->Update();
 }
 
-void Core::RemoveGameObject(GameObject* gameObject) {
-    if(!gameObject) return;
-
-    // 자식 오브젝트가 있다면 먼저 삭제
-    const std::vector<GameObject*>& children = gameObject->GetChildren();
-    for(size_t i = 0; i < children.size(); ++i) {
-        RemoveGameObject(children[i]);  // 재귀적으로 자식 오브젝트 삭제
-    }
-
-    // 벡터에서 게임 오브젝트를 삭제
-    for(size_t i = 0; i < mGameObjects.size(); ++i) {
-        if(mGameObjects[i] == gameObject) {
-            mGameObjects.erase(mGameObjects.begin() + i);
-            delete gameObject;  // 게임 오브젝트 메모리 해제
-            return;
-        }
-    }
+void Core::FixedUpdate() {
+    // FixedUpdate가 필요한 경우, 이곳에 추가적인 업데이트 로직을 작성합니다.
 }
 
-void Core::RemoveSpecificGameObject(const std::string& name) {
-    for(auto it = mGameObjects.rbegin(); it != mGameObjects.rend(); ++it) {
-        if((*it)->GetName() == name) {
-            RemoveGameObject(*it);
-            break;
-        }
-    }
+void Core::Render() {
+    SceneManager::GetInstance()->Render(mRenderer->GetRenderTarget());
 }
 
 void Core::InitializeConsole() {
