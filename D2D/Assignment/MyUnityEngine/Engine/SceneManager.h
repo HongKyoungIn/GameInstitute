@@ -17,9 +17,11 @@ public:
     void Update();
     void Render(ID2D1HwndRenderTarget* pRenderTarget);
 
+    void Clear();
+
 private:
-    SceneManager() = default;
-    ~SceneManager() = default;
+    SceneManager();
+    ~SceneManager();
     SceneManager(const SceneManager&) = delete;
     SceneManager& operator=(const SceneManager&) = delete;
 

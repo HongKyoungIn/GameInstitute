@@ -19,8 +19,11 @@ public:
     void RemoveGameObject(GameObject* _gameObject);
     void RemoveSpecificGameObject(const std::string& name);
 
+    const std::string& GetName() const { return mName; }
+
 protected:
     std::vector<GameObject*> mGameObjects;
     AABB mCullingBound;
+    std::string mName;
 };
 

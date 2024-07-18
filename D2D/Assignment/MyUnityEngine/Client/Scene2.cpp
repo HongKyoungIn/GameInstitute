@@ -11,47 +11,43 @@ Scene2::~Scene2() { }
 bool Scene2::Initialize() {
     // Add game objects and components here
 
-    // VRAM usage display
-    GameObject* VRAM = new GameObject("VRAM");
-    Transform* transform = VRAM->GetTransform();
-    transform->SetPosition(60, 10);
-    transform->SetScale(2, 2);
-    VRAM->SetLayer(2);  // UI layer
+    {
+        // VRAM usage display
+        GameObject* VRAM = new GameObject("VRAM");
+        Transform* transform = VRAM->GetTransform();
+        transform->SetPosition(60, 10);
+        transform->SetScale(2, 2);
+        VRAM->SetLayer(2);  // UI layer
 
-    VideoMemoryDisplay* videoMemoryDisplay = VRAM->AddComponent<VideoMemoryDisplay>();
-    AddGameObject(VRAM);
+        VideoMemoryDisplay* videoMemoryDisplay = VRAM->AddComponent<VideoMemoryDisplay>();
+        AddGameObject(VRAM);
+    }
 
-    // Reversed Run animation
-    GameObject* player1 = new GameObject("Player1");
-    transform = player1->GetTransform();
-    transform->SetPosition(400, 400);
-    Animator* animator = player1->AddComponent<Animator>();
-    animator->SetFlip(true);
-    animator->SetAnimation(L"../Resource/Run.png", 10, 1, 0.1f);
-    animator->SetSize(100, 100);
-    AddGameObject(player1);
+    {
+        // Reversed Run animation
+        GameObject* player1 = new GameObject("Player1");
+        Transform* transform = player1->GetTransform();
+        transform->SetPosition(400, 400);
+        player1->SetLayer(1);  // Player layer
+        Animator* animator = player1->AddComponent<Animator>();
+        animator->SetFlip(true);
+        animator->SetAnimation(L"../Resource/Run.png", 10, 1, 0.1f);
+        animator->SetSize(100, 100);
+        AddGameObject(player1);
+    }
 
-    // Normal Run animation
-    GameObject* player2 = new GameObject("Player2");
-    transform = player2->GetTransform();
-    transform->SetPosition(500, 500);
-    player2->SetLayer(1);  // Player layer
-    PlayerMove* playerMove = player2->AddComponent<PlayerMove>();
-    animator = player2->AddComponent<Animator>();
-    animator->SetAnimation(L"../Resource/Run.png", 10, 1, 0.1f);
-    animator->SetSize(100, 100);
-    AddGameObject(player2);
-
-    // Background
-    GameObject* background = new GameObject("BackGround");
-    transform = background->GetTransform();
-    transform->SetPosition(1920 / 2, 1080 / 2);
-    background->SetLayer(0);  // Background layer
-    animator = background->AddComponent<Animator>();
-    animator->SetFlip(true);
-    animator->SetAnimation(L"../Resource/midnight.png", 2, 2, 1.0f);
-    animator->SetSize(1920, 1080);
-    AddGameObject(background);
+    {
+        // Background
+        GameObject* background = new GameObject("BackGround");
+        Transform* transform = background->GetTransform();
+        transform->SetPosition(1920 / 2, 1080 / 2);
+        background->SetLayer(0);  // Background layer
+        Animator* animator = background->AddComponent<Animator>();
+        animator->SetFlip(true);
+        animator->SetAnimation(L"../Resource/midnight.png", 2, 2, 1.0f);
+        animator->SetSize(1920, 1080);
+        AddGameObject(background);
+    }
 
     return true;
 }

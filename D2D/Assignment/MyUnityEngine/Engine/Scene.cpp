@@ -10,7 +10,9 @@ Scene::Scene() {
 }
 
 Scene::~Scene() {
+    // std::cout << "Releasing Scene: " << mName << std::endl;
     for(GameObject* gameObject : mGameObjects) {
+        std::cout << "Releasing GameObject: " << gameObject->GetName() << std::endl;
         delete gameObject;
     }
     mGameObjects.clear();

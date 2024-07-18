@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "GameObject.h"
 #include "InputManager.h"
+#include "SceneManager.h"
 
 Renderer* Core::mRenderer = nullptr; // 정적 멤버 변수 초기화
 
@@ -34,12 +35,7 @@ bool Core::Initialize(_In_ HINSTANCE hInstance, _In_ int nCmdShow) {
 }
 
 void Core::Uninitialize() {
-    for(GameObject* gameObject : mGameObjects) {
-        std::cout << "gameObject Release" << std::endl;
-        Sleep(100);
-        delete gameObject;
-    }
-    mGameObjects.clear();
+    SceneManager::GetInstance()->Clear();
 
     if(mRenderer) {
         mRenderer->UninitDirect2D();
