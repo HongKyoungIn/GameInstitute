@@ -3,39 +3,32 @@
 
 class AABB {
 public:
-	AABB() : m_Center{ 0 }, m_Extent{ 0 } { }
+    AABB() : mCenter{ 0 }, mExtent{ 0 } { }
+    AABB(const D2D1_RECT_F& bounds)
+        : mCenter{ (bounds.right + bounds.left) / 2, (bounds.bottom + bounds.top) / 2 },
+        mExtent{ (bounds.right - bounds.left) / 2, (bounds.bottom - bounds.top) / 2 } { }
 
-	D2D1_POINT_2F m_Center; // 중앙
-	D2D1_POINT_2F m_Extent; // x,y축 확장값	
+    D2D1_POINT_2F GetCenter() const { return mCenter; }
+    D2D1_POINT_2F GetExtent() const { return mExtent; }
+    D2D1_RECT_F GetBounds() const {
+        return D2D1::RectF(
+            mCenter.x - mExtent.x,
+            mCenter.y - mExtent.y,
+            mCenter.x + mExtent.x,
+            mCenter.y + mExtent.y
+        );
+    }
 
-	AABB(const AABB&) = default;
-	AABB& operator=(const AABB&) = default;
-	AABB(AABB&&) = default;
-	AABB& operator=(AABB&&) = default;
-	~AABB() = default;
+    bool Intersects(const AABB& other) const {
+        return !(
+            (mCenter.x + mExtent.x < other.mCenter.x - other.mExtent.x) ||
+            (mCenter.x - mExtent.x > other.mCenter.x + other.mExtent.x) ||
+            (mCenter.y + mExtent.y < other.mCenter.y - other.mExtent.y) ||
+            (mCenter.y - mExtent.y > other.mCenter.y + other.mExtent.y)
+            );
+    }
 
-	void SetCenter(float x, float y) { m_Center = { x, y }; }
-	void SetExtent(float x, float y) { m_Extent = { x, y }; }
-	float GetMinX() { return m_Center.x - m_Extent.x; }
-	float GetMaxX() { return m_Center.x + m_Extent.x; }
-	float GetMinY() { return m_Center.y - m_Extent.y; }
-	float GetMaxY() { return m_Center.y + m_Extent.y; }
-
-	bool CheckIntersect(const AABB& other) const {
-		float BoxA_xmin = m_Center.x - m_Extent.x;
-		float BoxA_xmax = m_Center.x + m_Extent.x;
-		float BoxA_ymin = m_Center.y - m_Extent.y;
-		float BoxA_ymax = m_Center.y + m_Extent.y;
-
-		float BoxB_xmin = other.m_Center.x - other.m_Extent.x;
-		float BoxB_xmax = other.m_Center.x + other.m_Extent.x;
-		float BoxB_ymin = other.m_Center.y - other.m_Extent.y;
-		float BoxB_ymax = other.m_Center.y + other.m_Extent.y;
-
-		if(BoxA_xmax < BoxB_xmin || BoxA_xmin > BoxB_xmax || BoxA_ymax < BoxB_ymin || BoxA_ymin > BoxB_ymax) {
-			return false;
-		}
-
-		return true;
-	}
+private:
+    D2D1_POINT_2F mCenter;
+    D2D1_POINT_2F mExtent;
 };
