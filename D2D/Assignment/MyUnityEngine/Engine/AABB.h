@@ -19,6 +19,9 @@ public:
         );
     }
 
+    void SetCenter(float x, float y) { mCenter = { x, y }; }
+    void SetExtent(float x, float y) { mExtent = { x, y }; }
+
     bool Intersects(const AABB& other) const {
         return !(
             (mCenter.x + mExtent.x < other.mCenter.x - other.mExtent.x) ||
