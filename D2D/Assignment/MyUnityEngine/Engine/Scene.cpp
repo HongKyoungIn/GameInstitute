@@ -1,13 +1,7 @@
 #include "Scene.h"
 #include "sstream"
 
-Scene::Scene() {
-    // 화면 크기 설정
-    float width = 1920.0f;
-    float height = 1080.0f;
-    mCullingBound.SetExtent(width / 2, height / 2);
-    mCullingBound.SetCenter(width / 2, height / 2);
-}
+Scene::Scene() { }
 
 Scene::~Scene() {
     // std::cout << "Releasing Scene: " << mName << std::endl;
