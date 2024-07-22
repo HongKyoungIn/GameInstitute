@@ -1,10 +1,17 @@
 #include "PlayerMove.h"
+#include "../Engine/Movement.h"
 
 void PlayerMove::Update() {
+    
     Transform* transform = mOwner->GetTransform();
+    Movement::Update();
+    
+    SetDirection({ 0, 0 });
+    SetSpeed(0.0f);
+
     if(InputManager::GetInstance()->IsKeyHeld('A')) {
-        transform->SetFlip(true);
-        transform->SetPosition(transform->GetPosition().x - 3.0f, transform->GetPosition().y);
+        SetDirection({ -1, 0 });
+        SetSpeed(3.0f);
     }
     if(InputManager::GetInstance()->IsKeyHeld('D')) {
         transform->SetFlip(false);

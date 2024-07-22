@@ -99,6 +99,12 @@
     <ClInclude Include="TextRenderer.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="FiniteStateMachine.h">
+      <Filter>Unity</Filter>
+    </ClInclude>
+    <ClInclude Include="Movement.h">
+      <Filter>Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -134,9 +140,6 @@
     <ClCompile Include="ReferenceCounter.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationAsset.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Animator.cpp">
       <Filter>Component</Filter>
     </ClCompile>
@@ -159,6 +162,15 @@
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="TextRenderer.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="FiniteStateMachine.cpp">
+      <Filter>Unity</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationAsset.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Movement.cpp">
       <Filter>Component</Filter>
     </ClCompile>
   </ItemGroup>

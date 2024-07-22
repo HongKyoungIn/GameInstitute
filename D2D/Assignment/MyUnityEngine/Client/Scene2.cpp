@@ -75,12 +75,16 @@ void Scene2::HandleInput() {
         mDelPressed = false;
     }
 
-    if((GetAsyncKeyState(VK_F1) & 0x8000)) {
+    if ((GetAsyncKeyState(VK_F1) & 0x8000)) {
         SceneManager::GetInstance()->SetCurrentScene("Scene1");
     }
 
-    if((GetAsyncKeyState(VK_F2) & 0x8000)) {
+    if ((GetAsyncKeyState(VK_F2) & 0x8000)) {
         SceneManager::GetInstance()->SetCurrentScene("Scene2");
+    }
+
+    if ((GetAsyncKeyState(VK_F3) & 0x8000)) {
+        SceneManager::GetInstance()->SetCurrentScene("Scene3");
     }
 }
 

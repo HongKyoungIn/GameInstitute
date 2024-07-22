@@ -86,6 +86,10 @@ void Scene1::HandleInput() {
     if((GetAsyncKeyState(VK_F2) & 0x8000)) {
         SceneManager::GetInstance()->SetCurrentScene("Scene2");
     }
+
+    if ((GetAsyncKeyState(VK_F3) & 0x8000)) {
+        SceneManager::GetInstance()->SetCurrentScene("Scene3");
+    }
 }
 
 void Scene1::CreateCharacter(D2D1_POINT_2F position, const std::wstring& filePath, int frameCountX, int frameCountY, float frameDuration) {
