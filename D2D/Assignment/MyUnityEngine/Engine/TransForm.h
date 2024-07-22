@@ -25,10 +25,14 @@ public:
 
     D2D1_MATRIX_3X2_F GetWorldTransform() const { return mWorldTransform; }
 
+    void SetFlip(bool flip);
+
 private:
     D2D1_POINT_2F mPosition;
     D2D1_POINT_2F mScale = { 1.0f, 1.0f };
     float mRotation;
     Transform* mParent;
     D2D1_MATRIX_3X2_F mWorldTransform;
+
+    bool mFlip = false;
 };

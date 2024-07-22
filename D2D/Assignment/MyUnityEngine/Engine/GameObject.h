@@ -46,7 +46,8 @@ public:
     void SetLayer(int layer);
     int GetLayer() const;
 
-    AABB GetAABB() const;
+    AABB GetAABB();
+    void SetAABBExtent(float width, float height);
 
 private:
     std::string mName;
@@ -55,4 +56,5 @@ private:
     GameObject* mParent;
     Transform* mTransform;
     int mLayer;
+    AABB aabb;
 };

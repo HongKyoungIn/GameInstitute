@@ -1,9 +1,9 @@
 #pragma once
-#include <vector>
 #include "GameObject.h"
 #include "AABB.h"
 #include "Renderer.h"
 #include "CommonInclude.h"
+#include "Camera.h"
 
 class Scene {
 public:
@@ -19,11 +19,11 @@ public:
     void RemoveGameObject(GameObject* _gameObject);
     void RemoveSpecificGameObject(const std::string& name);
 
-    const std::string& GetName() const { return mName; }
+    GameObject* GetCamera() const { return mMainCameraObject; }
 
 protected:
     std::vector<GameObject*> mGameObjects;
-    AABB mCullingBound;
-    std::string mName;
+    GameObject* mMainCameraObject; // 메인 카메라 오브젝트
+    Camera* mCamera;
 };
 

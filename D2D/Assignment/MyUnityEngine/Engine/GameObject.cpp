@@ -55,13 +55,16 @@ int GameObject::GetLayer() const {
     return mLayer;
 }
 
-AABB GameObject::GetAABB() const {
+AABB GameObject::GetAABB() {
     D2D1_POINT_2F position = mTransform->GetPosition();
     D2D1_POINT_2F scale = mTransform->GetScale();
 
-    AABB aabb;
     aabb.SetCenter(position.x, position.y);
-    aabb.SetExtent(scale.x / 2.0f, scale.y / 2.0f);  // 크기 기준으로 AABB 확장 설정
 
     return aabb;
+}
+
+void GameObject::SetAABBExtent(float width, float height)
+{
+    aabb.SetExtent(width / 2, height / 2);
 }

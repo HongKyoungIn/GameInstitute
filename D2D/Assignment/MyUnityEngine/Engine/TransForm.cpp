@@ -49,3 +49,19 @@ void Transform::Update() {
         mWorldTransform = localTransform;
     }
 }
+
+
+void Transform::SetFlip(bool flip)
+{
+    mFlip = flip;
+    if (mFlip) {
+        if (mScale.x > 0) {
+            mScale.x *= -1;
+        }
+    } 
+    else {
+        if (mScale.x < 0) {
+            mScale.x *= -1;
+        }
+    }
+}

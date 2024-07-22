@@ -58,7 +58,7 @@ void Animator::Render(ID2D1HwndRenderTarget* renderTarget) {
     }
 
     // 올바른 순서로 변환 적용
-    renderTarget->SetTransform(scale * rotation * translation);
+    // renderTarget->SetTransform(scale * rotation * translation);
 
     // 이미지의 크기를 설정한 mSize를 이용해 렌더링
     D2D1_RECT_F destRect = D2D1::RectF(
@@ -80,4 +80,6 @@ void Animator::Render(ID2D1HwndRenderTarget* renderTarget) {
 void Animator::SetSize(float width, float height) {
     mSize.width = width;
     mSize.height = height;
+
+    mOwner->SetAABBExtent(width, height);
 }

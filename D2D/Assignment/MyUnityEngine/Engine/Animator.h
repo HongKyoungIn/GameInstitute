@@ -13,6 +13,7 @@ public:
     void SetFlip(bool _flip) { mFlip = _flip; } // 캐릭터 반전을 위한 함수
     void SetLoop(bool _loop) { mLoop = _loop; } // 애니메이션 루프를 위한 함수
 
+    D2D1_SIZE_F GetSize() { return mSize; }
     void SetSize(float width, float height); // 크기 설정 함수 추가
 
 private:

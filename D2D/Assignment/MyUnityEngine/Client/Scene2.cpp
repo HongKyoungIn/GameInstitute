@@ -29,6 +29,7 @@ bool Scene2::Initialize() {
         Transform* transform = player1->GetTransform();
         transform->SetPosition(400, 400);
         player1->SetLayer(1);  // Player layer
+        PlayerMove* playerMove = player1->AddComponent<PlayerMove>();
         Animator* animator = player1->AddComponent<Animator>();
         animator->SetFlip(true);
         animator->SetAnimation(L"../Resource/Run.png", 10, 1, 0.1f);

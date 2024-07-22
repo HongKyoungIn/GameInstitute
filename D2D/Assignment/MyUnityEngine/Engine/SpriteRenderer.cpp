@@ -24,6 +24,8 @@ void SpriteRenderer::SetSize(float width, float height) {
 	mWidth = width;
 	mHeight = height;
 	mDestRect = D2D1::RectF(-width / 2.0f, -height / 2.0f, width / 2.0f, height / 2.0f);
+
+    mOwner->SetAABBExtent(width, height);
 }
 
 void SpriteRenderer::Update() { }
@@ -42,7 +44,7 @@ void SpriteRenderer::Render(ID2D1HwndRenderTarget* renderTarget) {
         Transform* transform = mOwner->GetTransform();
         D2D1_MATRIX_3X2_F worldTransform = transform->GetWorldTransform();
 
-        renderTarget->SetTransform(worldTransform);
+       // renderTarget->SetTransform(worldTransform);
         renderTarget->DrawBitmap(mBitmap, mDestRect);
         renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
     }

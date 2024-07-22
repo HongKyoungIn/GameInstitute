@@ -40,6 +40,8 @@ bool Scene1::Initialize() {
     animator = player2->AddComponent<Animator>();
     animator->SetAnimation(L"../Resource/Run.png", 10, 1, 0.1f);
     animator->SetSize(100, 100);
+    transform->SetScale(2, 2);
+    player2->AddChild(mMainCameraObject);
     AddGameObject(player2);
 
     // Background
