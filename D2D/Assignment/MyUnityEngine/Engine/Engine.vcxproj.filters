@@ -105,6 +105,9 @@
     <ClInclude Include="Movement.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="CircleRenderer.h">
+      <Filter>Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -171,6 +174,9 @@
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Movement.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleRenderer.cpp">
       <Filter>Component</Filter>
     </ClCompile>
   </ItemGroup>

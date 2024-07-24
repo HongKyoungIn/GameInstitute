@@ -133,6 +133,7 @@
     <ClInclude Include="AnimationAsset.h" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CircleRenderer.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="Defines.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="AnimationAsset.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CircleRenderer.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="FiniteStateMachine.cpp" />

@@ -51,6 +51,12 @@
     <ClInclude Include="Scene1.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Scene3.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Scene3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -83,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="Scene2.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene3.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Scene3</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -130,12 +130,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BaseScript.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameProject.h" />
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene1.h" />
     <ClInclude Include="Scene2.h" />
+    <ClInclude Include="Scene3.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -147,11 +149,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseScript.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="GameProject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Scene2.cpp" />
+    <ClCompile Include="Scene3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
