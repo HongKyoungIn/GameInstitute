@@ -51,9 +51,6 @@
     <ClInclude Include="Scene1.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Scene3</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -86,9 +83,6 @@
     </ClCompile>
     <ClCompile Include="Scene2.cpp">
       <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Scene3</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
