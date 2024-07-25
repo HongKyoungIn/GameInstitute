@@ -13,18 +13,18 @@ struct State {
     State(DWORD _stateID) : stateID(_stateID) { }
     ~State() { transitions.clear(); }
 
-    DWORD getStateID() { return stateID; }
-    DWORD getNumTransitions() { return transitions.size(); }
+    DWORD GetStateID() { return stateID; }
+    DWORD GetNumTransitions() { return transitions.size(); }
 
-    void addTransition(DWORD inputEvent, DWORD outputStateID) {
+    void AddTransition(DWORD inputEvent, DWORD outputStateID) {
         transitions[inputEvent] = outputStateID;
     }
 
-    void deleteTransition(DWORD inputEvent) {
+    void DeleteTransition(DWORD inputEvent) {
         transitions.erase(inputEvent);
     }
 
-    DWORD getOutputStateID(DWORD inputEvent) {
+    DWORD GetOutputStateID(DWORD inputEvent) {
         auto iter = transitions.find(inputEvent);
         if (iter == transitions.end()) {
             return UNDEFINED; // 등록된 전이가 없음.
@@ -44,13 +44,13 @@ public:
     FiniteStateMachine() : currentStateID(UNDEFINED) { }
     ~FiniteStateMachine() { states.clear(); }
 
-    void addStateTransition(DWORD stateID, DWORD inputEvent, DWORD outputStateID);
+    void AddStateTransition(DWORD stateID, DWORD inputEvent, DWORD outputStateID);
 
-    void deleteTransition(DWORD stateID, DWORD inputEvent);
+    void DeleteTransition(DWORD stateID, DWORD inputEvent);
 
-    void setCurrentStateID(DWORD stateID);
+    void SetCurrentStateID(DWORD stateID);
 
-    void issueEvent(int inputEvent);
+    void IssueEvent(int inputEvent);
 
-    DWORD getCurrentStateID() const { return currentStateID; }
+    DWORD GetCurrentStateID() const { return currentStateID; }
 };

@@ -1,21 +1,21 @@
 #pragma once
 #include "Component.h"
+#include <d2d1.h>
 
 class Transform;
 
-class Movement : public Component { 
+class Movement : public Component {
 public:
-	Movement(GameObject* Owner) ;
-	~Movement() { }
+    Movement(GameObject* owner);
 
-	virtual void Update() override;
-	virtual void Render(ID2D1HwndRenderTarget* renderTarget) override;
+    void Update() override;
+    void Render(ID2D1HwndRenderTarget* renderTarget) override;
 
-	void SetDirection(D2D1_POINT_2F _direction) { mDirection = _direction; }
-	void SetSpeed(float _speed) { mSpeed = _speed; }
+    void SetDirection(D2D1_POINT_2F direction);
+    void SetSpeed(float speed);
 
 private:
-	Transform* transform;
-	D2D1_POINT_2F mDirection;
-	float mSpeed;
+    Transform* transform;
+    D2D1_POINT_2F mDirection;
+    float mSpeed;
 };

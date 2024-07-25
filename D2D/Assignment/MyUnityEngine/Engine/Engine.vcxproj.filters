@@ -60,9 +60,6 @@
     <ClInclude Include="Spinning.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="TimeManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
@@ -107,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="CircleRenderer.h">
       <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Unity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

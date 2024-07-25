@@ -1,7 +1,7 @@
 #include "GameProject.h"
 #include "Scene1.h" // Include your specific Scene header files here
 #include "Scene2.h" // Example of another scene
-// #include "Scene3.h" // Example of another scene
+#include "Scene3.h" // Example of another scene
 
 GameProject::GameProject() : mSpacePressed(false), mDelPressed(false) { }
 
@@ -21,12 +21,12 @@ bool GameProject::Initialize(HINSTANCE hInstance, int nCmdShow) {
     scene2->Initialize();
     SceneManager::GetInstance()->AddScene("Scene2", scene2);
 
-    //Scene3* scene3 = new Scene3(); // Another example scene
-    //scene3->Initialize();
-    //SceneManager::GetInstance()->AddScene("Scene3", scene3);
+    Scene3* scene3 = new Scene3(); // Another example scene
+    scene3->Initialize();
+    SceneManager::GetInstance()->AddScene("Scene3", scene3);
 
     // Set initial scene
-    SceneManager::GetInstance()->SetCurrentScene("Scene1");
+    SceneManager::GetInstance()->SetCurrentScene("Scene3");
 
     return true;
 }
