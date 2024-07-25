@@ -5,6 +5,7 @@
 #include "../Engine/SceneManager.h"
 #include "PlayerMove.h"
 #include "../Engine/Animator.h"
+#include "../Engine/TextRenderer.h"
 
 Scene3::Scene3() { }
 
@@ -24,57 +25,66 @@ bool Scene3::Initialize() {
         AddGameObject(background);
     }
 
-    // 플레이어 캐릭터 생성 및 초기화
-    player = new GameObject("player");
-    player->AddComponent<Character>(Character::TYPE_HUMAN, nullptr, 0);
-    Transform* playerTransform = player->GetTransform();
-    playerTransform->SetPosition(400, 400);
-    player->AddComponent<CircleRenderer>();
+    {
+        // 플레이어 캐릭터 생성 및 초기화
+        player = new GameObject("player");
+        player->AddComponent<Character>(Character::TYPE_HUMAN, nullptr, 0);
+        Transform* playerTransform = player->GetTransform();
+        playerTransform->SetPosition(0, 0);
+        player->AddComponent<CircleRenderer>();
 
-    // PlayerMove 설정
-    player->AddComponent<PlayerMove>();
-
-    // CircleRenderer 설정
-    CircleRenderer* playerCircle = player->GetComponent<CircleRenderer>();
-    playerCircle->SetColor(D2D1::ColorF(D2D1::ColorF::Blue));
-    playerCircle->SetRadius(20.0f);
-    playerCircle->SetCenter(D2D1::Point2F(0, 0));
-
-    player->AddChild(mMainCameraObject);
-    AddGameObject(player);
-
-    // 적 캐릭터 생성 및 초기화
-    for (int i = 0; i < 5; ++i) {
-        DWORD enemyStateTransitions[][3] = {
-            { Character::STATE_STAND, Character::EVENT_FINDTARGET, Character::STATE_FOLLOW },
-            { Character::STATE_STAND, Character::EVENT_BEATTACKED, Character::STATE_ATTACK },
-            { Character::STATE_STAND, Character::EVENT_DUBIOUS, Character::STATE_MOVE },
-            { Character::STATE_MOVE, Character::EVENT_FINDTARGET, Character::STATE_FOLLOW },
-            { Character::STATE_MOVE, Character::EVENT_STOPWALK, Character::STATE_STAND },
-            { Character::STATE_ATTACK, Character::EVENT_LOSTTARGET, Character::STATE_STAND },
-            { Character::STATE_ATTACK, Character::EVENT_HEALTHDRAINED, Character::STATE_RUNAWAY },
-            { Character::STATE_ATTACK, Character::EVENT_OUTOFATTACK, Character::STATE_FOLLOW },
-            { Character::STATE_FOLLOW, Character::EVENT_WITHINATTACK, Character::STATE_ATTACK },
-            { Character::STATE_FOLLOW, Character::EVENT_LOSTTARGET, Character::STATE_STAND },
-            { Character::STATE_RUNAWAY, Character::EVENT_LOSTTARGET, Character::STATE_STAND },
-        };
-
-        GameObject* enemyObject = new GameObject("enemy");
-        Character* enemyCharacter = enemyObject->AddComponent<Character>(Character::TYPE_AI, enemyStateTransitions, 11);
-        Transform* enemyTransform = enemyObject->GetTransform();
-        enemyTransform->SetPosition(rand() % 640, rand() % 480);
+        // PlayerMove 설정
+        player->AddComponent<PlayerMove>();
 
         // CircleRenderer 설정
-        CircleRenderer* enemyCircle = enemyObject->AddComponent<CircleRenderer>();
-        enemyCircle->SetColor(D2D1::ColorF(D2D1::ColorF::Green));
-        enemyCircle->SetRadius(15.0f);
-        enemyCircle->SetCenter(D2D1::Point2F(0, 0));
-        
-        enemies.push_back(enemyObject);
-        AddGameObject(enemyObject);
-    }
+        CircleRenderer* playerCircle = player->GetComponent<CircleRenderer>();
+        playerCircle->SetColor(D2D1::ColorF(D2D1::ColorF::Blue));
+        playerCircle->SetRadius(20.0f);
+        playerCircle->SetCenter(D2D1::Point2F(0, 0));
 
+        TextRenderer* playerText = player->AddComponent<TextRenderer>();
+        playerText->SetText(L"Player");
+        playerText->SetFontSize(24.0f);
+        playerText->SetFontColor(D2D1::ColorF(D2D1::ColorF::White));
+        playerText->SetPosition({ 0, 0 });
+
+        player->AddChild(mMainCameraObject);
+        AddGameObject(player);
+    }
     
+    {
+        // 적 캐릭터 생성 및 초기화
+        for (int i = 0; i < 5; ++i) {
+            DWORD enemyStateTransitions[][3] = {
+                { Character::STATE_STAND, Character::EVENT_FINDTARGET, Character::STATE_FOLLOW },
+                { Character::STATE_STAND, Character::EVENT_BEATTACKED, Character::STATE_ATTACK },
+                { Character::STATE_STAND, Character::EVENT_DUBIOUS, Character::STATE_MOVE },
+                { Character::STATE_MOVE, Character::EVENT_FINDTARGET, Character::STATE_FOLLOW },
+                { Character::STATE_MOVE, Character::EVENT_STOPWALK, Character::STATE_STAND },
+                { Character::STATE_ATTACK, Character::EVENT_LOSTTARGET, Character::STATE_STAND },
+                { Character::STATE_ATTACK, Character::EVENT_HEALTHDRAINED, Character::STATE_RUNAWAY },
+                { Character::STATE_ATTACK, Character::EVENT_OUTOFATTACK, Character::STATE_FOLLOW },
+                { Character::STATE_FOLLOW, Character::EVENT_WITHINATTACK, Character::STATE_ATTACK },
+                { Character::STATE_FOLLOW, Character::EVENT_LOSTTARGET, Character::STATE_STAND },
+                { Character::STATE_RUNAWAY, Character::EVENT_LOSTTARGET, Character::STATE_STAND },
+            };
+
+            GameObject* enemyObject = new GameObject("enemy");
+            Character* enemyCharacter = enemyObject->AddComponent<Character>(Character::TYPE_AI, enemyStateTransitions, 11);
+            Transform* enemyTransform = enemyObject->GetTransform();
+            enemyTransform->SetPosition(rand() % 640, rand() % 480);
+
+            // CircleRenderer 설정
+            CircleRenderer* enemyCircle = enemyObject->AddComponent<CircleRenderer>();
+            enemyCircle->SetColor(D2D1::ColorF(D2D1::ColorF::Green));
+            enemyCircle->SetRadius(15.0f);
+            enemyCircle->SetCenter(D2D1::Point2F(0, 0));
+
+            enemies.push_back(enemyObject);
+            AddGameObject(enemyObject);
+        }
+    }
+        
 
     return true;
 }
